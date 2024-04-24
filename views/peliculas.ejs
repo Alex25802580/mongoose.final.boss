@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.0">
+    <title>Tu Título</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+        body {
+            background-color: #343a40;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+
+        .card-horizontal {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .card-img-top {
+            width: 200px;
+            height: auto;
+        }
+
+        .card-body {
+            flex: 1;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="text-white">Películas</h1>
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+            </li>
+            <li class="page-item active" aria-current="page"></li>
+            </li>
+            <li class="page-item"><a class="page-link" href="/">Volver al index</a></li>
+            <li class="page-item"><a class="page-link" href="/directores">Ir a directores</a></li>
+            <li class="page-item">
+            </li>
+        </ul>
+    </nav>
+    <div class="mb-4">
+        <a href="/peliculas/update_peliculas" class="btn btn-primary mr-2">Modificar película</a>
+        <a href="/peliculas/delete_pelicula" class="btn btn-danger mr-2">Eliminar película</a>
+        <a href="/peliculas/insert_peliculas" class="btn btn-success">Insertar película</a>
+    </div>
+
+    <div class="row mt-3">
+        <% peliculas.forEach(pelicula => { %>
+            <div class="col-lg-12 mb-4">
+                <div class="card card-horizontal">
+                    <img src="<%= pelicula.Imagen %>" class="card-img-top" alt="<%= pelicula.Nombre %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= pelicula.Nombre %></h5>
+                        <p class="card-text">Descripción: <%= pelicula.Descripción %></p>
+                        <p class="card-text">Duración: <%= pelicula.Duración %> minutos</p>
+                        <p class="card-text">Premios: <%= pelicula.Premios %></p>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

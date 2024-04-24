@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Director</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="container mt-5">
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+            </li>
+            <li class="page-item active" aria-current="page"></li>
+            </li>
+            <li class="page-item"><a class="page-link" href="/">Volver al index</a></li>
+            <li class="page-item"><a class="page-link" href="/directores">Volver a Directores</a></li>
+            <li class="page-item">
+            </li>
+        </ul>
+    </nav>
+</div>
+<body class="bg-dark text-white">
+<div class="container mt-5">
+    <h1 class="text-center">Modificar Director</h1>
+    <form action="/api/directores/update_directores" method="POST">
+        <div class="form-group">
+            <label for="nombre">Nombre del Director que quieres modificar:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="nuevo_nombre">Nuevo nombre:</label>
+            <input type="text" class="form-control" id="nuevo_nombre" name="nuevo_nombre">
+        </div>
+        <div class="form-group">
+            <label for="nacionalidad">Nueva nacionalidad:</label>
+            <input type="text" class="form-control" id="nacionalidad" name="nacionalidad">
+        </div>
+        <div class="form-group">
+            <label for="genero">Nuevo género:</label>
+            <input type="text" class="form-control" id="genero" name="genero">
+        </div>
+        <div class="form-group">
+            <label for="imagen">Nueva imagen URL:</label>
+            <input type="text" class="form-control" id="imagen" name="imagen">
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Modificar">
+        <a href="/" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>
