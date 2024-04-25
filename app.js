@@ -64,29 +64,43 @@ async function findDMovieByName(nombre) {
     }
 }
 
+const Director = require('./models/Director'); // Importa el modelo Director
+const Pelicula = require('./models/peliculas'); // Importa el modelo Pelicula
+
 ////PAGINA DIRECTORES
+
+
 app.get('/directores', async (req, res) => {
     try {
-        const directors = await directores.find({})
-        console.log(directores2)
-        res.render('directores', { title: 'Directores', directores: directores2 });
+        const directores = await Director.find({}); // Utiliza el modelo Director para recuperar los directores de la base de datos
+        console.log(directores);
+        res.render('directores', { title: 'Directores', directores: directores });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error en el servidor al obtener los directores');
     }
 });
-
-
-/////PAGINA PELICULAS
 app.get('/peliculas', async (req, res) => {
     try {
-        const peliculas2  await peliculas.find({})
+        const peliculas = await Pelicula.find({}); // Utiliza el modelo Director para recuperar los directores de la base de datos
+        console.log(peliculas);
         res.render('peliculas', { title: 'Peliculas', peliculas: peliculas });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error en el servidor al obtener las películas');
+        res.status(500).send('Error en el servidor al obtener las peliculas');
     }
 });
+
+/////PAGINA PELICULAS
+//app.get('/peliculas', async (req, res) => {
+    //try {
+      //  const peliculas2  await peliculas.find({})
+     //   res.render('peliculas', { title: 'Peliculas', peliculas: peliculas });
+    //} catch (error) {
+        //console.error(error);
+       // res.status(500).send('Error en el servidor al obtener las películas');
+    //}
+//});
 
 
 /////MODIFICAR DIRECTOR POR NOMBRE

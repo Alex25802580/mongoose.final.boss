@@ -63,12 +63,12 @@
         <% peliculas.forEach(pelicula => { %>
             <div class="col-lg-12 mb-4">
                 <div class="card card-horizontal">
-                    <img src="<%= pelicula.Imagen %>" class="card-img-top" alt="<%= pelicula.Nombre %>">
+                    <img src="<%= pelicula.imagen %>" class="card-img-top" alt="<%= pelicula.Nombre %>">
                     <div class="card-body">
                         <h5 class="card-title"><%= pelicula.Nombre %></h5>
-                        <p class="card-text">Descripción: <%= pelicula.Descripción %></p>
-                        <p class="card-text">Duración: <%= pelicula.Duración %> minutos</p>
-                        <p class="card-text">Premios: <%= pelicula.Premios %></p>
+                        <p class="card-text">Descripción: <%= pelicula.descripción %></p>
+                        <p class="card-text">Duración: <%= pelicula.duración %> minutos</p>
+                        <p class="card-text">Premios: <%= pelicula.premios %></p>
                     </div>
                 </div>
             </div>

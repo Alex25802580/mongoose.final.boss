@@ -61,12 +61,11 @@
         <% directores.forEach(director => { %>
             <div class="col-lg-12 mb-4">
                 <div class="card card-horizontal">
-                    <img src="<%= director.Imagen %>" class="card-img-top" alt="<%= director.Nombre %>">
+                    <img src="<%= director.imagen %>" class="card-img-top" alt="<%= director.Nombre %>">
                     <div class="card-body">
-                        <h5 class="card-title"><%= director.Nombre %></h5>
-                        <p class="card-text">Nacionalidad: <%= director.Nacionalidad %></p>
-                        <p class="card-text">Género: <%= director.Género %></p>
-                        <p class="card-text">Descripción: <%= director.Descripción %></p>
+                        <h5 class="card-title">nombre: <%= director.nombre %></h5>
+                        <p class="card-text">nacionalidad: <%= director.nacionalidad %></p>
+                        <p class="card-text">genero: <%= director.genero %></p>
                     </div>
                 </div>
             </div>

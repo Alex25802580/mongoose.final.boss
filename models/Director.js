@@ -8,6 +8,6 @@ const directorSchema = new mongoose.Schema({
     imagen: { type: String, required: true }
 });
 
-const Director = mongoose.model('Director', directorSchema);
+const Director = mongoose.model('Director', directorSchema, 'directors');
 
 module.exports = Director;
