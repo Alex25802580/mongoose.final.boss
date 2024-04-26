@@ -91,17 +91,6 @@ app.get('/peliculas', async (req, res) => {
     }
 });
 
-/////PAGINA PELICULAS
-//app.get('/peliculas', async (req, res) => {
-    //try {
-      //  const peliculas2  await peliculas.find({})
-     //   res.render('peliculas', { title: 'Peliculas', peliculas: peliculas });
-    //} catch (error) {
-        //console.error(error);
-       // res.status(500).send('Error en el servidor al obtener las películas');
-    //}
-//});
-
 
 /////MODIFICAR DIRECTOR POR NOMBRE
 app.post("/api/directores/update_directores", async (req, res) => {
@@ -185,33 +174,36 @@ app.post('/api/peliculas/delete_pelicula', async (req, res) => {
 });
 
 ///// INSERTAR UN NUEVO DIRECTOR
-app.post('/api/directores/insert_directores', async (req, res)=>{
+
+
+app.post('/api/directores/insert_directores', async (req, res) => {
     const params = req.body;
     console.log(params);
-    try{
-        await db('Directores').insert(params);
-        res.send('Insertado correctamente')
-    }catch (e) {
-        console.log(e)
-        res.send('Error en el servidor')
+    try {
+        const director = new Director(params); // Crea una nueva instancia del modelo Director con los parámetros recibidos
+        await director.save(); // Guarda el nuevo director en la base de datos
+        res.send('Insertado correctamente');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error en el servidor');
     }
-
 });
+
 ///// INSERTAR NUEVA PELICULA
-app.post('/api/peliculas/insert_peliculas', async (req, res)=>{
+
+
+app.post('/api/peliculas/insert_peliculas', async (req, res) => {
     const params = req.body;
     console.log(params);
-    try{
-        await db('Películas').insert(params);
-        res.send('Insertado correctamente')
-    }catch (e) {
-        console.log(e)
-        res.send('Error en el servidor')
+    try {
+        const pelicula = new Pelicula(params); // Crea una nueva instancia del modelo Director con los parámetros recibidos
+        await pelicula.save(); // Guarda el nuevo director en la base de datos
+        res.send('Insertada correctamente');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error en el servidor');
     }
-
 });
-
-
 
 
 
