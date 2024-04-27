@@ -84,7 +84,7 @@ app.get('/peliculas/:id', async (req, res) => {
     const peliculaId = req.params.id;
     try {
         const pelicula = await obtenerDetallesPelicula(peliculaId);
-        res.render('detalles_directores', { title: 'Detalles de peliculas', peliculas: [pelicula] });
+        res.render('detalles_peliculas', { title: 'Detalles de peliculas', peliculas: [pelicula] });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error en el servidor al obtener los detalles de la pelicula');
@@ -268,25 +268,25 @@ app.get('/peliculas', (req, res) => {
     res.render('peliculas', { title: 'Peliculas' }); // Asegúrate de que 'directores' sea el nombre correcto de tu plantilla HTML para la página de directores
 });
 
-app.get('/directores/update_directores', (req, res) => {
+app.get('/directores/detalles_directores/update_directores', (req, res) => {
     res.render('update_directores', { title: 'Modificar Director' }); // Asegúrate de que 'update_directores' sea el nombre correcto de tu plantilla HTML para la página de modificación de director
 });
-app.get('/peliculas/update_peliculas', (req, res) => {
-    res.render('update_peliculas', { title: 'Modificar Película' }); // Asegúrate de que 'update_directores' sea el nombre correcto de tu plantilla HTML para la página de modificación de director
+app.get('/peliculas/detalles_peliculas/update_peliculas', (req, res) => {
+    res.render('update_peliculas', { title: 'Modificar Película' });
 });
 
-app.get('/directores/insert_directores', (req, res) => {
+app.get('/directores/detalles_directores/insert_directores', (req, res) => {
     res.render('insert_directores', { title: 'Insertar Director' });
 });
 
-app.get('/peliculas/insert_peliculas', (req, res) => {
+app.get('/peliculas/detalles_peliculas/insert_peliculas', (req, res) => {
     res.render('insert_peliculas', { title: 'Insertar Película' });
 });
 
-app.get('/directores/delete_director', (req, res) => {
+app.get('/directores/detalles_directores/delete_director', (req, res) => {
     res.render('delete_director', { title: 'Borrar Director' });
 });
-app.get('/peliculas/delete_pelicula', (req, res) => {
+app.get('/peliculas/detalles_peliculas/delete_pelicula', (req, res) => {
     res.render('delete_pelicula', { title: 'Borrar Película' });
 });
 app.get('/directores/detalles_directores', (req, res) => {
