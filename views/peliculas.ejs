@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.0">
-    <title>Tu Título</title>
+    <title>Películas</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-
         body {
             background-color: #343a40;
         }
@@ -16,7 +15,6 @@
         .navbar {
             background-color: #343a40;
         }
-
 
         .card-horizontal {
             display: flex;
@@ -63,14 +61,12 @@
         <% peliculas.forEach(pelicula => { %>
             <div class="col-lg-12 mb-4">
                 <div class="card card-horizontal">
-                    <img src="<%= pelicula.imagen %>" class="card-img-top" alt="<%= pelicula.Nombre %>">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= pelicula.nombre %></h5>
-                        <p class="card-text">Descripción: <%= pelicula.descripción %></p>
-                        <p class="card-text">Duración: <%= pelicula.duracion %> minutos</p>
-                        <p class="card-text">Premios: <%= pelicula.premios %></p>
-
-                    </div>
+                    <a href="/peliculas/<%= pelicula.id %>"> <!-- Enlace a la página de detalles de la película -->
+                        <img src="<%= pelicula.imagen %>" class="card-img-top" alt="<%= pelicula.nombre %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= pelicula.nombre %></h5>
+                        </div>
+                    </a>
                 </div>
             </div>
         <% }); %>

@@ -8,7 +8,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        /* Estilos adicionales si los necesitas */
+
     </style>
 </head>
 
@@ -19,7 +19,7 @@
         <h1>Contacto</h1>
     </header>
 
-    <form action="/procesar_formulario" method="post" class="mt-4">
+    <form id="formulario-contacto" action="/procesar_formulario" method="post" class="mt-4">
         <div class="form-group">
             <label for="nombre" class="text-white">Nombre:</label>
             <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese su nombre" required>
@@ -34,11 +34,30 @@
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
+
+    <div id="mensaje-exito" class="alert alert-success mt-3" style="display: none;">
+        Formulario enviado correctamente.
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    document.getElementById('formulario-contacto').addEventListener('submit', function(event) {
+        event.preventDefault()
+
+
+        document.getElementById('formulario-contacto').style.display = 'none';
+        document.getElementById('mensaje-exito').style.display = 'block';
+    });
+</script>
+<div class="text-center mt-4">
+    <a href="/" class="btn btn-outline-light btn-lg mr-3">Volver al inicio</a>
+</div>
+
+
 </body>
 
 </html>

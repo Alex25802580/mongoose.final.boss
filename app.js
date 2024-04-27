@@ -67,9 +67,49 @@ async function findDMovieByName(nombre) {
 const Director = require('./models/Director'); // Importa el modelo Director
 const Pelicula = require('./models/peliculas'); // Importa el modelo Pelicula
 
+
+app.get('/directores/:id', async (req, res) => {
+    const directorId = req.params.id;
+    try {
+        const director = await obtenerDetallesDirector(directorId);
+        res.render('detalles_directores', { title: 'Detalles del Director', directores: [director] });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error en el servidor al obtener los detalles del director');
+    }
+});
+
+
+app.get('/peliculas/:id', async (req, res) => {
+    const peliculaId = req.params.id;
+    try {
+        const pelicula = await obtenerDetallesPelicula(peliculaId);
+        res.render('detalles_directores', { title: 'Detalles de peliculas', peliculas: [pelicula] });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error en el servidor al obtener los detalles de la pelicula');
+    }
+});
+async function obtenerDetallesDirector(directorId) {
+    try {
+        const director = await Director.findById(directorId).exec();
+        return director;
+    } catch (error) {
+        console.error('Error al obtener los detalles del director:', error);
+        return null;
+    }
+}
+async function obtenerDetallesPelicula(peliculaId) {
+    try {
+        const pelicula = await Pelicula.findById(peliculaId).exec();
+        return pelicula;
+    } catch (error) {
+        console.error('Error al obtener los detalles de la pelicula:', error);
+        return null;
+    }
+}
+
 ////PAGINA DIRECTORES
-
-
 app.get('/directores', async (req, res) => {
     try {
         const directores = await Director.find({}); // Utiliza el modelo Director para recuperar los directores de la base de datos
@@ -249,7 +289,12 @@ app.get('/directores/delete_director', (req, res) => {
 app.get('/peliculas/delete_pelicula', (req, res) => {
     res.render('delete_pelicula', { title: 'Borrar Película' });
 });
-
+app.get('/directores/detalles_directores', (req, res) => {
+    res.render('detalles_directores', { title: 'Detalles directores' });
+});
+app.get('/peliculas/detalles_peliculas', (req, res) => {
+    res.render('detalles_peliculas', { title: 'Detalles peliculas' });
+});
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Directores</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -61,13 +61,12 @@
         <% directores.forEach(director => { %>
             <div class="col-lg-12 mb-4">
                 <div class="card card-horizontal">
-                    <img src="<%= director.imagen %>" class="card-img-top" alt="<%= director.Nombre %>">
-                    <div class="card-body">
-                        <h5 class="card-title">nombre: <%= director.nombre %></h5>
-                        <p class="card-text">nacionalidad: <%= director.nacionalidad %></p>
-                        <p class="card-text">genero: <%= director.genero %></p>
-                        <p class="card-text">descripcion: <%= director.descripcion %></p>
-                    </div>
+                    <a href="/directores/<%= director.id %>"> <!-- Enlace a la página de detalles del director -->
+                        <img src="<%= director.imagen %>" class="card-img-top" alt="<%= director.Nombre %>">
+                        <div class="card-body">
+                            <h5 class="card-title">Nombre: <%= director.nombre %></h5>
+                        </div>
+                    </a>
                 </div>
             </div>
         <% }); %>

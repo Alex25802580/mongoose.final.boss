@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Director</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #343a40;
+            color: white;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: #212529;
+            color: white;
+        }
+
+        .card-img-top {
+            width: 200px;
+            height: auto;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card">
+        <% directores.forEach(director => { %>
+            <img src="<%= director.imagen %>" class="card-img-top" alt="<%= director.nombre %>">
+            <div class="card-body">
+                <h5 class="card-title">Nombre: <%= director.nombre %></h5>
+                <p class="card-text">Nacionalidad: <%= director.nacionalidad %></p>
+                <p class="card-text">Género: <%= director.genero %></p>
+                <p class="card-text">Descripción: <%= director.descripcion %></p>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
