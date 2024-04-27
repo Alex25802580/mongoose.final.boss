@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Mi Página de Cine</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Estilos adicionales si los necesitas */
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+
+<div class="container mt-5">
+    <header class="text-center">
+        <h1>Contacto</h1>
+    </header>
+
+    <form action="/procesar_formulario" method="post" class="mt-4">
+        <div class="form-group">
+            <label for="nombre" class="text-white">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingrese su nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="apellido" class="text-white">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese su apellido" required>
+        </div>
+        <div class="form-group">
+            <label for="email" class="text-white">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Ingrese su correo electrónico" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

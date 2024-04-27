@@ -100,10 +100,11 @@ app.post("/api/directores/update_directores", async (req, res) => {
         await db('Directores')
             .where('Nombre', '=', nombreDirector)
             .update({
-                Nombre: params.nuevo_nombre,
-                Nacionalidad: params.nacionalidad,
-                Género: params.genero,
-                Imagen: params.img
+                nombre: params.nuevo_nombre,
+                nacionalidad: params.nacionalidad,
+                genero: params.genero,
+                descripcion: parms.descripcion,
+                imagen: params.img
             });
         res.send('Director actualizado correctamente');
     } catch (error) {
@@ -211,6 +212,11 @@ app.post('/api/peliculas/insert_peliculas', async (req, res) => {
 app.get('/', (req, res) => {
     res.render('index',{title:'WEB DE CINE'})
 });
+// CONTACTO
+app.get('/contacto', (req, res) => {
+    res.render('contacto',{title:'Contacto'})
+});
+
 /// ABOUT
 app.get('/about', (req, res) => {
     res.render('about', { title: 'Sobre mí' });
