@@ -1,89 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles de Película</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/pilotos.css'/>
+    <%- include('partials/navbar.html') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
+<h1> Detalles de la pelicula</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Duracion</th>
+        <th>Premios</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (pelicula) { %>
 
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        <li class="page-item disabled"></li>
-        <li class="page-item active" aria-current="page"></li>
-        <div class="container mt-5">
-            <div class="text-center mb-4">
-                <h1 class="text-white">Detalles de película</h1>
-            </div>
-            <li class="page-item"><a class="btn btn-primary" href="/">Volver al index</a></li>
-            <li class="page-item"><a class="btn btn-primary" href="/directores">Ir a directores</a></li>
-            <li class="page-item"></li>
-        </div>
-    </ul>
-</nav>
+        <tr>
+            <td> <%= pelicula._id %> </td> <!-- Cambio aquí -->
+            <td> <%= pelicula.nombre %></td>
+            <td> <%= pelicula.duracion %></td>
+            <td> <%= pelicula.premios %></td>
+            <td><img src="<%= pelicula.imagen %>" alt="" height="150px"></td>
+            <td>
+                <a href="#" data-pelicula-id="<%= pelicula._id %>" class="action_delete_pelicula">Eliminar</a> <!-- Cambio aquí -->
+                <a href="/peliculas/update/<%= pelicula._id %>" >Actualizar</a> <!-- Cambio aquí -->
+            </td>
+        </tr>
 
-<style>
-    body {
-        background-color: #343a40;
-        color: white;
+    <% } else { %>
+        <tr>
+            <td colspan="8">No se encontró la pelicula</td>
+        </tr>
+    <% } %>
+
+    </tbody>
+</table>
+
+<script>
+    async function delete_pelicula(evt){
+        evt.preventDefault(); // Detener el comportamiento por defecto
+        let id = $(this).data('pelicula-id');
+        try {
+            await $.ajax({
+                url: '/api/peliculas/'  + id, <!-- Cambio aquí -->
+                type: 'DELETE'
+            });
+            window.location.reload();
+
+        } catch (e) {
+            console.log('Error' + e.status + " " + e.statusText);
+        }
     }
 
-    .container {
-        margin-top: 50px;
-    }
-
-    .card {
-        background-color: #212529;
-        color: white;
-    }
-
-    .card-img-top {
-        width: 200px;
-        height: auto;
-    }
-
-    .card-body {
-        padding: 20px;
-    }
-
-    .button-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .button-container a {
-        margin: 0 10px;
-    }
-</style>
-
-<div class="container">
-    <div class="card">
-        <% peliculas.forEach(pelicula => { %>
-            <img src="<%= pelicula.imagen %>" class="card-img-top" alt="<%= pelicula.titulo %>">
-            <div class="card-body">
-                <h5 class="card-title">Nombre: <%= pelicula.nombre%></h5>
-                <p class="card-text">Duración: <%= pelicula.duracion %></p>
-                <p class="card-text">Premios: <%= pelicula.premios %></p>
-                <p class="card-text">Descripción: <%= pelicula.descripcion %></p>
-            </div>
-        <% }); %>
-    </div>
-</div>
-
-<div class="button-container">
-    <a href="/peliculas/detalles_peliculas/update_peliculas" class="btn btn-primary">Modificar película</a>
-    <a href="/peliculas/delete_pelicula" class="btn btn-danger">Eliminar película</a>
-    <a href="/peliculas/insert_peliculas" class="btn btn-success">Insertar película</a>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    $(document).ready(() =>{
+        $('.action_delete_pelicula').click(delete_pelicula());
+    });
+</script>
 
 </body>
-
+<%- include('partials/footer.html') %>
 </html>

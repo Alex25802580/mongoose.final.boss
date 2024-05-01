@@ -1,87 +1,37 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Página de Cine</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <%- include('partials/navbar.html') %>
 
-    <style>
-        .img-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .img-container img {
-            width: 300px; /* Define el ancho deseado */
-            height: auto;
-        }
-
-        .img-label {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .img-label::after {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 8px 8px 0;
-            border-style: solid;
-            border-color: rgba(0, 0, 0, 0.5) transparent transparent;
-        }
-    </style>
 </head>
+<body>
+<header class="header">
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/120px-F1.svg.png" alt="Formula 1" class="logo">
+    </div>
+</header>
 
-<body class="bg-dark text-white">
 
-<div class="container mt-5">
-
-    <header class="text-center">
-        <h1>Locos por el Cine</h1>
-    </header>
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-            </li>
-            <li class="page-item active" aria-current="page"></li>
-            </li>
-            <li class="page-item"><a class="page-link" href="/peliculas">Ir a películas</a></li>
-            <li class="page-item"><a class="page-link" href="/directores">Ir a directores</a></li>
-            <li class="page-item">
-            </li>
-        </ul>
-    </nav>
-
-    <div class="text-center mb-4">
-        <div class="img-container">
-            <a href="/peliculas"><img src="https://pics.filmaffinity.com/poor_things-235700969-mmed.jpg" alt="Películas" class="btn btn-outline-light btn-lg"></a>
-            <div class="img-label">Películas</div>
+<section class="features">
+    <div class="container">
+        <div class="feature">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/as-formula-1-returns-to-the-grid-for-the-2024-season-the-news-photo-1708599152.jpg?crop=0.872xw:0.777xh;0.0801xw,0.0571xh&resize=1200:*" alt="Pilotos" class="feature-img">
+            <h3 class="feature-title">Peliculas</h3>
+            <p class="feature-description">Conoce a los pilotos más talentosos del mundo de la Formula 1.</p>
+            <a href="/peliculas" class="btn btn-secondary">Ver más</a>
         </div>
-        <div class="img-container">
-            <a href="/directores"><img src="https://pics.filmaffinity.com/the_directors-276797456-large.jpg" alt="Directores" class="btn btn-outline-light btn-lg"></a>
-            <div class="img-label">Directores</div>
+        <div class="feature">
+            <img src="https://cdn-5.motorsport.com/images/amp/2d1LK3BY/s1000/formula-1-2022-la-parrilla-de--4.jpg" alt="Equipos" class="feature-img">
+            <h3 class="feature-title">Directores</h3>
+            <p class="feature-description">Explora los equipos y sus increíbles máquinas de carreras.</p>
+            <a href="/directores" class="btn btn-secondary">Ver más</a>
         </div>
     </div>
+</section>
 
-    <div class="text-center mt-4">
-        <a href="/about" class="btn btn-outline-light btn-lg mr-3">Sobre mí</a>
-        <a href="/contacto" class="btn btn-outline-light btn-lg">Contacto</a>
-    </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
+<%- include('partials/footer.html') %>
 </html>

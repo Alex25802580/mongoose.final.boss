@@ -1,81 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Directores</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #343a40;
-        }
-
-        .navbar {
-            background-color: #343a40;
-        }
-
-        .card-horizontal {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .card-img-top {
-            width: 200px;
-            height: auto;
-        }
-
-        .card-body {
-            flex: 1;
-            padding-left: 15px;
-        }
-    </style>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/equipos.css'/>
+    <%- include('partials/navbar.html') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
-<div class="container mt-5">
-    <div class="text-center mb-4">
-        <h1 class="text-white">Directores</h1>
-    </div>
-
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-            </li>
-            <li class="page-item active" aria-current="page"></li>
-            </li>
-            <li class="page-item"><a class="page-link" href="/">Volver al index</a></li>
-            <li class="page-item"><a class="page-link" href="/peliculas">Ir a películas</a></li>
-            <li class="page-item">
-            </li>
-        </ul>
-    </nav>
-    <div class="mb-4">
-        <a href="/directores/update_directores" class="btn btn-primary mr-2">Modificar director</a>
-        <a href="/directores/delete_director" class="btn btn-danger mr-2">Eliminar director</a>
-        <a href="/directores/insert_directores" class="btn btn-success">Insertar director</a>
-    </div>
-
-    <div class="row mt-3">
-        <% directores.forEach(director => { %>
-            <div class="col-lg-12 mb-4">
-                <div class="card card-horizontal">
-                    <a href="/directores/<%= director.id %>"> <!-- Enlace a la página de detalles del director -->
-                        <img src="<%= director.imagen %>" class="card-img-top" alt="<%= director.Nombre %>">
-                        <div class="card-body">
-                            <h5 class="card-title">Nombre: <%= director.nombre %></h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
+<h1> Lista de Directores</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Nacionalidad</th>
+        <th>Genero</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (Array.isArray(directores)) { %>
+        <% directores.forEach(function(director) { %>
+            <tr>
+                <td><%= director.id %></td>
+                <td><%= director.nombre %></td>
+                <td><%= director.nacionalidad %></td>
+                <td><%= director.genero %></td>
+                <td><%= director.imagen %></td>
+                <td>
+                    <a href="#" data-director-id="<%= director.id%>" class="action_delete_director">Delete</a>
+                    <a href="/directores/update/<%= director.id%>" >Update</a>
+                    <a href="/directores/detalles/<%=director.id%>">Detalles</a>
+                </td>
+            </tr>
         <% }); %>
-    </div>
-</div>
+    <% } else { %>
+        <tr>
+            <td colspan="6">No se encontraron directores</td>
+        </tr>
+    <% } %>
+    <tr>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    async function delete_director(evt){
+        evt.preventDefault() // no sigas tu comportamiento por defecto
+        let id = $(this).data('director-id')
+        try {
+            await $.ajax({
+                url: '/api/directores/'  + id,
+                type: 'DELETE'
+            })
+            window.location.reload()
+
+        }catch (e) {
+            console.log(e)
+            console.log('Error' + e.status + " " + e.statusText)
+        }
+    }
+
+    $(document).ready(() =>{
+        document.getElementsByClassName('action_delete_director')
+        $('.action_delete_director').click(delete_director())
+    });
+</script>
+
 </body>
-
+<%- include('partials/footer.html') %>
 </html>

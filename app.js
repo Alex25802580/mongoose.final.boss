@@ -14,22 +14,13 @@ mongoose.connect(mongoURI, {
 });
 
 const db = mongoose.connection;
-const directores = require('./models/Director.js')
+
 db.on('error', (error) => {
     console.error('Error al conectar a la base de datos:', error);
 });
-const peliculas = require('./models/peliculas')
-db.on('error', (error) => {
-    console.error('Error al conectar a la base de datos:', error);
-});
-
-
 db.once('open', () => {
     console.log('Conexión a la base de datos establecida correctamente');
 });
-
-
-
 
 
 // view engine setup
@@ -43,263 +34,306 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
-async function findDirectorByName(nombre) {
-    try {
-        const director = await Director.findOne({ Nombre: nombre });
-        return director;
-    } catch (error) {
-        console.error('Error al buscar director en la base de datos:', error);
-        return null;
-    }
-}
-
-async function findDMovieByName(nombre) {
-    try {
-        const pelicula = await db('Películas').where('Nombre', nombre).first();
-        return pelicula;
-    } catch (error) {
-        console.error('Error al buscar película en la base de datos:', error);
-        return null;
-    }
-}
-
-const Director = require('./models/Director'); // Importa el modelo Director
-const Pelicula = require('./models/peliculas'); // Importa el modelo Pelicula
+const director = require('./models/Director'); // Importa el modelo Director
+const pelicula = require('./models/peliculas'); // Importa el modelo Pelicula
 
 
-app.get('/directores/:id', async (req, res) => {
-    const directorId = req.params.id;
-    try {
-        const director = await obtenerDetallesDirector(directorId);
-        res.render('detalles_directores', { title: 'Detalles del Director', directores: [director] });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error en el servidor al obtener los detalles del director');
-    }
+// MUESTRA TODOS LOS directores
+app.get('/api/directores', async (req, res) => {
+    const directores = await director.find({});
+    res.send(directores)
+
 });
 
-
-app.get('/peliculas/:id', async (req, res) => {
-    const peliculaId = req.params.id;
-    try {
-        const pelicula = await obtenerDetallesPelicula(peliculaId);
-        res.render('detalles_peliculas', { title: 'Detalles de peliculas', peliculas: [pelicula] });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error en el servidor al obtener los detalles de la pelicula');
+// ITEMS DETAIL
+app.get('/api/directores/:id', async (req, res) => {
+    const id = req.params.id
+    const result = await director.findById(id);
+    if (director){
+        res.send(director);
+    }else {
+        res.status(500).send("Error");
     }
-});
-async function obtenerDetallesDirector(directorId) {
-    try {
-        const director = await Director.findById(directorId).exec();
-        return director;
-    } catch (error) {
-        console.error('Error al obtener los detalles del director:', error);
-        return null;
-    }
-}
-async function obtenerDetallesPelicula(peliculaId) {
-    try {
-        const pelicula = await Pelicula.findById(peliculaId).exec();
-        return pelicula;
-    } catch (error) {
-        console.error('Error al obtener los detalles de la pelicula:', error);
-        return null;
-    }
-}
-
-////PAGINA DIRECTORES
-app.get('/directores', async (req, res) => {
-    try {
-        const directores = await Director.find({}); // Utiliza el modelo Director para recuperar los directores de la base de datos
-        console.log(directores);
-        res.render('directores', { title: 'Directores', directores: directores });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error en el servidor al obtener los directores');
-    }
-});
-app.get('/peliculas', async (req, res) => {
-    try {
-        const peliculas = await Pelicula.find({}); // Utiliza el modelo Director para recuperar los directores de la base de datos
-        console.log(peliculas);
-        res.render('peliculas', { title: 'Peliculas', peliculas: peliculas });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error en el servidor al obtener las peliculas');
-    }
+    res.send(result);
 });
 
-
-/////MODIFICAR DIRECTOR POR NOMBRE
-app.post("/api/directores/update_directores", async (req, res) => {
-    const params = req.body;
-    const nombreDirector = params.nombre;
-    try {
-        await db('Directores')
-            .where('Nombre', '=', nombreDirector)
-            .update({
-                nombre: params.nuevo_nombre,
-                nacionalidad: params.nacionalidad,
-                genero: params.genero,
-                descripcion: parms.descripcion,
-                imagen: params.img
-            });
-        res.send('Director actualizado correctamente');
-    } catch (error) {
-        console.log(error);
-        res.send('Error en el servidor al actualizar el director');
-    }
-});
-/////MODIFICAR PELICULA POR NOMBRE
-app.post('/api/peliculas/update_peliculas', async (req, res) => {
-    const nombre = req.body.nombre;
-    const nuevoNombre = req.body.nuevo_nombre;
-    const duracion = req.body.duracion;
-    const premios = req.body.premios;
-    const imagen = req.body.imagen;
-    const descripcion = req.body.descripcion;
-
-    try {
-        const pelicula = await findMovieByName(nombre); // Buscar la película por su nombre
-        if (!pelicula) {
-            return res.status(404).send('Película no encontrada');
+// HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
+app.post("/api/directores/update/:id", async (req, res)=>{
+    let id = req.params.id;
+    let params = req.body;
+    console.log(params)
+    try{
+        const directorUpdate = await director.findOneAndUpdate({_id: id},{$set: params},{new: true});
+        if (!directorUpdate){
+            res.status(404).json({succes: false, message: 'No econtrado, Error'})
         }
-        await db('Películas').where('Nombre', nombre).update({
-            Nombre: nuevoNombre,
-            Duración: duracion,
-            Premios: premios,
-            Imagen: imagen,
-            Descripción: descripcion
-        });
-
-        res.send('Película actualizada correctamente');
-    } catch (error) {
-        console.error('Error al actualizar la película:', error);
-        res.status(500).send('Error en el servidor al actualizar la película');
+        res.status(200).json({succes: true, message: 'Updateado Correctamente'})
+        console.log('Updateado id: ', id)
+    } catch (error){
+        console.log(error)
+        res.send('Error en el servidor.')
     }
 });
 
 
-
-////// ELIMINAR DIRECTOR POR NOMBRE
-app.post('/api/directores/delete_director', async (req, res) => {
-    const nombre = req.body.nombre; // Obtener el nombre del director desde el cuerpo de la solicitud
-    try {
-        const director = await findDirectorByName(nombre);
-        if (!director) {
-            return res.status(404).send('Director no encontrado');
+// ELIMINAR UN ITEM DE EQUIPOS POR ID
+app.delete('/api/directores/:id', async (req, res)=>{
+    const id = req.params.id
+    try{
+        const eliminarDirector = await director.deleteOne({_id:id});
+        console.log(eliminarDirector)
+        if (deletedDirector) {
+            res.send('Director eliminado correctamente');
+        } else {
+            res.status(404).send('Director no encontrado');
         }
-        await db('Directores').where('Nombre', nombre).del();
-        res.send('Director eliminado correctamente');
-    } catch (error) {
-        console.error('Error al eliminar director:', error);
-        res.status(500).send('Error en el servidor al eliminar el director');
-    }
-});
-//////ELIMINAR PELICULA POR NOMBRE
-app.post('/api/peliculas/delete_pelicula', async (req, res) => {
-    const nombre = req.body.nombre;
-    try {
-        const pelicula = await findDMovieByName(nombre);
-        if (!pelicula) {
-            return res.status(404).send('Película no encontrada');
-        }
-        await db('Películas').where('Nombre', nombre).del();
-        res.send('Película eliminada correctamente');
-    } catch (error) {
-        console.error('Error al eliminar la película:', error);
-        res.status(500).send('Error en el servidor al eliminar la películar');
+    }catch (e){
+        console.log(e);
+        res.send('Error en el servidor')
     }
 });
 
-///// INSERTAR UN NUEVO DIRECTOR
-
-
-app.post('/api/directores/insert_directores', async (req, res) => {
+// INSERTAR UN NUEVO ITEM A Directores
+app.post('/api/directores', async (req, res)=>{
     const params = req.body;
     console.log(params);
-    try {
-        const director = new Director(params); // Crea una nueva instancia del modelo Director con los parámetros recibidos
-        await director.save(); // Guarda el nuevo director en la base de datos
-        res.send('Insertado correctamente');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error en el servidor');
+    try{
+        await director.create(params)
+        res.send('Insertado correctamente')
+    }catch (e) {
+        console.log(e)
+        res.send('Error en el servidor')
+    }
+
+});
+
+//////////////////////////// PEliculas ///////////////////////////////
+
+
+// MUESTRA TODAS LAS PELICULAS
+app.get('/api/peliculas',async (req, res) => {
+    try{
+        const peliculas = await pelicula.find({});
+        res.send(peliculas);
+    }catch (e) {
+        console.log(e)
     }
 });
 
-///// INSERTAR NUEVA PELICULA
+// ITEMS DETAIL
+app.get('/api/peliculas/:id',async (req, res)=>{
+    const id = req.params.id
+    const result = await pelicula.findById(id);
+    res.status(200).send(result)
+});
 
 
-app.post('/api/peliculas/insert_peliculas', async (req, res) => {
+
+// HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
+app.post("/api/peliculas/update/:id", async (req, res)=>{
+    let id = req.params.id;
+    let params = req.body;
+    console.log(params)
+    try{
+        const peliculaUpdated = await piloto.findOneAndUpdate({_id: id},{$set: params},{new: true});
+
+        res.status(200).json({success: true, message: 'Updatedado Correctamente'});
+        console.log('Updateado id: ', id)
+    } catch (error){
+        console.log(error)
+        res.send('Error en el servidor.')
+    }
+});
+
+// ELIMINAR UN ITEM DE PILOTOS POR ID
+app.delete('/api/peliculas/:id',async (req, res)=>{
+    const id = req.params.id
+    try{
+        const peliculaElim = await pelicula.deleteOne({_id:id});
+        console.log(peliculaElim)
+        if (peliculaElim) {
+            res.send('Pelicula eliminado correctamente');
+        } else {
+            res.status(404).send('Pelicula no encontrado');
+        }
+    }catch (e){
+        console.log(e);
+        res.send('Error en el servidor')
+    }
+});
+
+// INSERTAR UN NUEVO ITEM A PELICULA
+app.post('/api/peliculas', async (req, res)=>{
     const params = req.body;
     console.log(params);
-    try {
-        const pelicula = new Pelicula(params); // Crea una nueva instancia del modelo Director con los parámetros recibidos
-        await pelicula.save(); // Guarda el nuevo director en la base de datos
-        res.send('Insertada correctamente');
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error en el servidor');
+    try{
+        await pelicula.create(params);
+        res.send('Insertada correctamente')
+    }catch (e) {
+        console.log(e)
+        res.send('Error en el servidor')
     }
 });
 
-
+////////////////////////////////////////// WEB //////////////////////////////////////
+//////////////////////////// PILOTOS ///////////////////////////////
 
 // INDEX
 app.get('/', (req, res) => {
-    res.render('index',{title:'WEB DE CINE'})
+    res.render('index',{title:'Cine'})
 });
-// CONTACTO
+
 app.get('/contacto', (req, res) => {
     res.render('contacto',{title:'Contacto'})
 });
-
-/// ABOUT
 app.get('/about', (req, res) => {
-    res.render('about', { title: 'Sobre mí' });
-});
-app.get('/directores', (req, res) => {
-    res.render('directores', { title: 'Directores' }); // Asegúrate de que 'directores' sea el nombre correcto de tu plantilla HTML para la página de directores
-});
-app.get('/peliculas', (req, res) => {
-    res.render('peliculas', { title: 'Peliculas' }); // Asegúrate de que 'directores' sea el nombre correcto de tu plantilla HTML para la página de directores
+    res.render('about',{title:'About'})
 });
 
-app.get('/directores/detalles_directores/update_directores', (req, res) => {
-    res.render('update_directores', { title: 'Modificar Director' }); // Asegúrate de que 'update_directores' sea el nombre correcto de tu plantilla HTML para la página de modificación de director
-});
-app.get('/peliculas/detalles_peliculas/update_peliculas', (req, res) => {
-    res.render('update_peliculas', { title: 'Modificar Película' });
-});
-
-app.get('/directores/detalles_directores/insert_directores', (req, res) => {
-    res.render('insert_directores', { title: 'Insertar Director' });
-});
-
-app.get('/peliculas/detalles_peliculas/insert_peliculas', (req, res) => {
-    res.render('insert_peliculas', { title: 'Insertar Película' });
+app.get('/directores/detalles/:id',async (req, res) => {
+    const id = req.params.id
+    const query = await director.findById(id);
+    console.log(query)
+    const params = {
+        title: 'Detalles Director',
+        director: query
+    }
+    res.render('detalles_directores', params)
 });
 
-app.get('/directores/detalles_directores/delete_director', (req, res) => {
-    res.render('delete_director', { title: 'Borrar Director' });
+app.get('/peliculas/detalles/:id',async (req, res) => {
+    const id = req.params.id
+    const query = await pelicula.findById(id);
+    console.log(query)
+    const params = {
+        title: 'Detalles Pelicula',
+        pelicula: query
+    }
+    res.render('detalles_peliculas', params)
 });
-app.get('/peliculas/detalles_peliculas/delete_pelicula', (req, res) => {
-    res.render('delete_pelicula', { title: 'Borrar Película' });
+
+// Show ALL Items
+app.get('/peliculas', async (req, res) => {
+    const query = await pelicula.find({})
+    // console.log(query)
+    const params = {
+        title: 'Peliculas',
+        peliculas: query
+    }
+    console.log(params)
+    res.render('peliculas', params);
 });
-app.get('/directores/detalles_directores', (req, res) => {
-    res.render('detalles_directores', { title: 'Detalles directores' });
+// UPDATE ITEM
+app.get('/peliculas/update/:id', async (req,res)=>{
+    const id = req.params.id
+    const query = await pelicula.findById(id);
+    console.log(query)
+    const params = {
+        title: 'Update Pelicula',
+        peliculas: query
+    }
+    res.render('update_peliculas', params)
 });
-app.get('/peliculas/detalles_peliculas', (req, res) => {
-    res.render('detalles_peliculas', { title: 'Detalles peliculas' });
+
+// Update quipo
+app.post("/peliculas/update", async (req, res)=>{
+    const {_id,nombre,duracion,premios,imagen} = req.body
+    console.log('params',{_id,nombre,duracion,premios,imagen})
+    try {
+        const result = await piloto.findByIdAndUpdate(_id,{_id,nombre,duracion,premios,imagen},{new:true});
+        console.log('insertado!', result)
+        res.redirect('/peliculas')
+    }catch (e) {
+        console.log(e)
+        res.status(500).send('error en el servidor')
+    }
 });
+// INSERT ITEM GET: show form
+app.get('/piliculas/insert', (req,res)=>{
+    res.render('insert_peliculas',
+        {title:'insert pelicula'}
+    )
+});
+
+//Insertar pelicula
+app.post('/piliculas/insert',async (req, res)=>{
+    const {_id,nombre,duracion,premios,imagen,} = req.body
+    console.log('params',{_id,nombre,duracion,premios,imagen})
+    try {
+        const result = await pelicula.create({nombre,duracion,premios,imagen})
+        console.log('insertado!', result)
+        res.redirect('/peliculas')
+    }catch (e) {
+        console.log(e)
+        res.status(500).send('error en el servidor')
+    }
+});
+
+//////////////////////////// EQUIPOS ///////////////////////////////
+
+// Show ALL Items
+
+
+app.get('/directores', async (req, res) => {
+    const query = await director.find({})
+    // console.log(query)
+    const params = {
+        title: 'Directores',
+        directores: query
+    }
+    console.log(params)
+    res.render('directores', params);
+});
+// Update quipo
+app.post("/directores/update", async (req, res)=>{
+    const {_id,nombre,nacionalidad,genero,imagen} = req.body;
+    console.log('params',{_id,nombre,nacionalidad,genero,imagen})
+    try {
+        const result = await director.findByIdAndUpdate(_id, {nombre,nacionalidad,genero,imagen},{new:true});
+        console.log('insertado!', result)
+        res.redirect('/directores')
+    }catch (e) {
+        console.log(e)
+        res.status(500).send('error en el servidor')
+    }
+});
+// INSERT ITEM GET: show form
+app.get('/directores/insert', (req,res)=>{
+    res.render('insert_directores',
+        {title:'insert directores'}
+    )
+});
+// INSERT ITEM POST: get params and do your mojo!
+app.post('/directores/insert',async (req, res)=>{
+    const {_id, nombre,nacionalidad,genero,imagen} = req.body;
+    console.log('params',{_id,nombre,nacionalidad,genero,imagen})
+    try {
+        const result = await director.create({nombre,nacionalidad,genero,imagen})
+        console.log('insertado!', result)
+        res.redirect('/directores')
+    }catch (e) {
+        console.log(e)
+        res.status(500).send('error en el servidor')
+    }
+});
+// UPDATE ITEM
+app.get('/directores/update/:id', async (req,res)=>{
+    const id = req.params.id
+    const query = await director.findById(id);
+    console.log(query)
+    const params = {
+        title: 'Update Director',
+        item: query
+    }
+    res.render('update_directores', params)
+});
+
+
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
 });
-
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development
@@ -310,5 +344,4 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-
 module.exports = app;

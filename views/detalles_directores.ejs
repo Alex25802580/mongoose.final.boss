@@ -1,58 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Director</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #343a40;
-            color: white;
-        }
-
-        .container {
-            margin-top: 50px;
-        }
-
-        .card {
-            background-color: #212529;
-            color: white;
-        }
-
-        .card-img-top {
-            width: 200px;
-            height: auto;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-    </style>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/equipos.css'/>
+    <%- include('partials/navbar.html') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
 <body>
+<h1> Detalles del Director</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Nacionalidad</th>
+        <th>Genero</th>
+        <th>Imagen</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if (director) { %>
+        <tr>
+            <td><%= director._id %></td>
+            <td><%= director.nombre %></td>
+            <td><%= director.nacionalidad %></td>
+            <td><%= director.genero %></td>
+            <td><%= director.imagen %></td>
+            <td>
+                <a href="/directores" data-director-id="<%= director.id%>" class="action_delete_director">Eliminar</a>
+                <a href="/directores/update/<%= director.id %>" >Actualizar</a>
+            </td>
+        </tr>
+    <% } else { %>
+        <tr>
+            <td colspan="7">No se encontró el director</td>
+        </tr>
+        <tr>
+            <td colspan="6">No se encontraron directores</td>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
 
-<div class="container">
-    <div class="card">
-        <% directores.forEach(director => { %>
-            <img src="<%= director.imagen %>" class="card-img-top" alt="<%= director.nombre %>">
-            <div class="card-body">
-                <h5 class="card-title">Nombre: <%= director.nombre %></h5>
-                <p class="card-text">Nacionalidad: <%= director.nacionalidad %></p>
-                <p class="card-text">Género: <%= director.genero %></p>
-                <p class="card-text">Descripción: <%= director.descripcion %></p>
-            </div>
-        <% }); %>
-    </div>
-</div>
+<script>
+    async function delete_director(evt){
+        evt.preventDefault();
+        let id = $(this).data('director-id');
+        try {
+            await $.ajax({
+                url: '/api/directores/'  + id,
+                type: 'DELETE'
+            });
+            window.location.reload();
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        } catch (e) {
+            console.log('Error' + e.status + " " + e.statusText);
+        }
+    }
+
+    $(document).ready(() =>{
+        $('.action_delete_director').click(delete_director);
+    });
+</script>
 
 </body>
-
+<%- include('partials/footer.html') %>
 </html>

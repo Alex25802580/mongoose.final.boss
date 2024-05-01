@@ -1,52 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insertar Director</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <%- include('partials/navbar.html') %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
 </head>
-<body class="bg-dark text-white">
-<div class="container mt-5">
-    <div class="container mt-5">
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                </li>
-                <li class="page-item active" aria-current="page"></li>
-                </li>
-                <li class="page-item"><a class="page-link" href="/">Volver al index</a></li>
-                <li class="page-item"><a class="page-link" href="/directores">Volver a Directores</a></li>
-                <li class="page-item">
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <h1 class="text-center">Insertar Director</h1>
-    <form action="/api/directores/insert_directores" method="POST">
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
-        </div>
-        <div class="form-group">
-            <label for="nacionalidad">Nacionalidad:</label>
-            <input type="text" class="form-control" id="nacionalidad" name="nacionalidad" required>
-        </div>
-        <div class="form-group">
-            <label for="genero">Género:</label>
-            <input type="text" class="form-control" id="genero" name="genero" required>
-        </div>
-        <div class="form-group">
-            <label for="imagen">Imagen:</label>
-            <input type="text" class="form-control" id="imagen" name="imagen" required>
-        </div>
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion" required>
-        </div>
-        <input type="submit" class="btn btn-primary" value="Insertar">
-    </form>
+<body>
+<h1> INSERT ITEM</h1>
+<form action="/directores/insert" method="POST">
 
-</div>
+    <label for="nombre">nombre</label>
+    <input id="nombre" type="text" name="nombre">
+
+    <label for="nacionalidad">nacionalidad</label>
+    <input id="nacionalidad" type="text" name="nacionalidad">
+
+    <label for="genero">genero</label>
+    <input id="genero" type="number" name="imagen">
+
+    <label for="imagen">imagen</label>
+    <input id="imagen" type="text" name="imagen">
+
+    <input type="submit" value="insert">
+</form>
 </body>
+<%- include('partials/footer.html') %>
 </html>

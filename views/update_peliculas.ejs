@@ -1,56 +1,29 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modificar Película</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <%- include('partials/navbar.html') %>
 </head>
-<div class="container mt-5">
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-            </li>
-            <li class="page-item active" aria-current="page"></li>
-            </li>
-            <li class="page-item"><a class="page-link" href="/">Volver al index</a></li>
-            <li class="page-item"><a class="page-link" href="/peliculas">Volver a Películas</a></li>
-            <li class="page-item">
-            </li>
-        </ul>
-    </nav>
-</div>
-<body class="bg-dark text-white">
-<div class="container mt-5">
-    <h1 class="text-center">Modificar Película</h1>
-    <form action="/api/peliculas/update_peliculas" method="POST">
-        <div class="form-group">
-            <label for="nombre">Nombre de la Película que quieres modificar:</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" required>
-        </div>
-        <div class="form-group">
-            <label for="nuevo_nombre">Nuevo nombre:</label>
-            <input type="text" class="form-control" id="nuevo_nombre" name="nuevo_nombre">
-        </div>
-        <div class="form-group">
-            <label for="duracion">Duración:</label>
-            <input type="text" class="form-control" id="duracion" name="duracion">
-        </div>
-        <div class="form-group">
-            <label for="premios">Premios:</label>
-            <input type="text" class="form-control" id="premios" name="premios">
-        </div>
-        <div class="form-group">
-            <label for="imagen">Nueva imagen URL:</label>
-            <input type="text" class="form-control" id="imagen" name="imagen">
-        </div>
-        <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <input type="text" class="form-control" id="descripcion" name="descripcion">
-        </div>
-        <input type="submit" class="btn btn-primary" value="Modificar">
-        <a href="/" class="btn btn-secondary">Cancelar</a>
-    </form>
-</div>
+<body>
+<h1> <%= title %></h1>
+<form action="/peliculas/update" method="POST">
+
+    <input id="id" type="hidden" name="id" value="<%= peliculas.id %>">
+    <label for="nombre">nombre</label>
+    <input id="nombre" type="text" name="nombre" value="<%= peliculas.nombre %>">
+
+    <label for="duracion">duracion</label>
+    <input id="duracion" type="text" name="duracion" value="<%= peliculas.duracion %>" >
+
+    <label for="premios">premios</label>
+    <input id="premios" type="text" name="premios" value="<%= peliculas.premios %>" >
+
+    <label for="imagen">imagen</label>
+    <input id="imagen" type="text" name="imagen" value="<%= peliculas.imagen %>" >
+    
+
+    <input type="submit" value="update">
+</form>
 </body>
+<%- include('partials/footer.html') %>
 </html>
