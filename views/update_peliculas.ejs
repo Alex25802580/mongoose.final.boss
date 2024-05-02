@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
     <%- include('partials/navbar.html') %>
     <style>
+
         body {
             background-color: #343a40; /* Color de fondo oscuro */
             color: white; /* Color del texto */
@@ -43,13 +44,30 @@
         input[type="submit"]:hover {
             background-color: #0056b3; /* Color de fondo del botón al pasar el mouse */
         }
+
+        input[type="text"] {
+            background-color: white; /* Color de fondo blanco para los campos de texto */
+            color: #495057; /* Color del texto en los campos de texto */
+            border: 1px solid #ced4da; /* Añadir un borde a los campos de texto */
+            border-radius: 4px; /* Agregar bordes redondeados a los campos de texto */
+            padding: 8px; /* Añadir espacio interno */
+            margin-top: 5px; /* Espacio superior */
+            width: 100%; /* Ancho completo */
+            box-sizing: border-box; /* Incluir el padding en el ancho total */
+        }
     </style>
 </head>
+
 <body>
+
 
 <%- include('partials/navbar.html') %>
 
 <h1><%= title %></h1>
+<li class="nav-item">
+    <a class="nav-link btn btn-primary" href="/directores">Volver</a>
+</li>
+
 
 <form action="/peliculas/update" method="POST">
 

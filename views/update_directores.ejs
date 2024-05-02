@@ -26,18 +26,20 @@
         }
 
         input[type="text"],
-        input[type="imagen"],
         input[type="submit"] {
             width: 100%; /* Ancho completo */
             padding: 8px; /* Añadir espacio interno */
             margin-top: 5px; /* Espacio superior */
             box-sizing: border-box; /* Incluir el padding en el ancho total */
+            background-color: #495057; /* Color de fondo para los campos de entrada */
+            color: white; /* Color del texto en los campos de entrada */
+            border: none; /* Quitar borde */
+            border-radius: 4px; /* Agregar bordes redondeados */
         }
 
         input[type="submit"] {
             background-color: #007bff; /* Color de fondo del botón */
             color: white; /* Color del texto del botón */
-            border: none; /* Quitar borde */
             cursor: pointer; /* Cambiar cursor al pasar por encima */
         }
 
@@ -51,6 +53,9 @@
 <%- include('partials/navbar.html') %>
 
 <h1>Actualizar Ítem</h1>
+<li class="nav-item">
+    <a class="nav-link btn btn-primary" href="/directores">Volver</a>
+</li>
 
 <form action="/directores/update" method="POST">
 
@@ -66,7 +71,7 @@
     <input id="genero" type="text" name="genero" value="<%= item.genero %>">
 
     <label for="imagen">Imagen</label>
-    <input type="text" id="imagen" name="imagen" value="<%= item.imagen %>">
+    <input id="imagen" type="text" name="imagen" value="<%= item.imagen %>">
 
     <input type="submit" value="Actualizar">
 </form>

@@ -54,14 +54,20 @@
 <%- include('partials/navbar.html') %>
 
 <h1><%= title %></h1>
+<ul class="nav">
+    <li class="nav-item">
+        <a class="nav-link btn btn-primary" href="/directores">Volver</a>
+    </li>
+
+</ul>
 
 <table>
     <thead>
     <tr>
-        <th>ID</th>
         <th>Nombre</th>
         <th>Nacionalidad</th>
         <th>Género</th>
+        <th>Descripción</th>
         <th>Imagen</th>
         <th>Acciones</th>
     </tr>
@@ -69,10 +75,10 @@
     <tbody>
     <% if (director) { %>
         <tr>
-            <td><%= director._id %></td>
             <td><%= director.nombre %></td>
             <td><%= director.nacionalidad %></td>
             <td><%= director.genero %></td>
+            <td><%= director.descripcion %></td>
             <td><%= director.imagen %></td>
             <td>
                 <a href="/directores" data-director-id="<%= director.id%>" class="action_delete_director">Eliminar</a>

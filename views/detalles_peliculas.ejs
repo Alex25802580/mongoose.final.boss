@@ -55,15 +55,20 @@
 <%- include('partials/navbar.html') %>
 
 <h1><%= title %></h1>
+<li class="nav-item">
+    <a class="nav-link btn btn-primary" href="/peliculas">Volver</a>
+</li>
 
 <table>
     <thead>
     <tr>
-        <th>ID</th>
+
         <th>Nombre</th>
         <th>Duración</th>
         <th>Premios</th>
+        <th>Descripción</th>
         <th>Imagen</th>
+        <th>Director</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -71,11 +76,12 @@
     <% if (pelicula) { %>
 
         <tr>
-            <td> <%= pelicula._id %> </td> <!-- Cambio aquí -->
             <td> <%= pelicula.nombre %></td>
             <td> <%= pelicula.duracion %></td>
             <td> <%= pelicula.premios %></td>
+            <td> <%= pelicula.descripcion %></td>
             <td><img src="<%= pelicula.imagen %>" alt="" height="150px"></td>
+            <td> <%= pelicula.director %></td>
             <td>
                 <a href="#" data-pelicula-id="<%= pelicula._id %>" class="action_delete_pelicula">Eliminar</a> <!-- Cambio aquí -->
                 <a href="/peliculas/update/<%= pelicula._id %>" >Actualizar</a> <!-- Cambio aquí -->
