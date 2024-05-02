@@ -1,37 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <%- include('partials/navbar.html') %>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header h1 {
+            font-size: 3rem; /* Aumentar el tamaño del título */
+        }
 
+        .card {
+            background-color: #333; /* Cambiar el color de fondo de las tarjetas */
+            border: none; /* Eliminar el borde de las tarjetas */
+            border-radius: 10px; /* Agregar borde redondeado a las tarjetas */
+            margin-bottom: 20px; /* Agregar espacio entre las tarjetas */
+        }
+
+        .card img {
+            border-radius: 10px 10px 0 0; /* Redondear solo las esquinas superiores de las imágenes */
+            height: 300px; /* Definir la altura de las imágenes */
+            object-fit: cover; /* Ajustar la imagen para cubrir el contenedor */
+        }
+    </style>
 </head>
-<body>
-<header class="header">
+
+<body class="bg-dark text-white">
+
+<%- include('partials/navbar.html') %>
+
+<header class="header text-center mt-5">
     <div class="container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/F1.svg/120px-F1.svg.png" alt="Formula 1" class="logo">
+        <h1><%= title %></h1>
     </div>
 </header>
 
-
-<section class="features">
+<section class="features mt-5">
     <div class="container">
-        <div class="feature">
-            <img src="https://hips.hearstapps.com/hmg-prod/images/as-formula-1-returns-to-the-grid-for-the-2024-season-the-news-photo-1708599152.jpg?crop=0.872xw:0.777xh;0.0801xw,0.0571xh&resize=1200:*" alt="Pilotos" class="feature-img">
-            <h3 class="feature-title">Peliculas</h3>
-            <p class="feature-description">Conoce a los pilotos más talentosos del mundo de la Formula 1.</p>
-            <a href="/peliculas" class="btn btn-secondary">Ver más</a>
-        </div>
-        <div class="feature">
-            <img src="https://cdn-5.motorsport.com/images/amp/2d1LK3BY/s1000/formula-1-2022-la-parrilla-de--4.jpg" alt="Equipos" class="feature-img">
-            <h3 class="feature-title">Directores</h3>
-            <p class="feature-description">Explora los equipos y sus increíbles máquinas de carreras.</p>
-            <a href="/directores" class="btn btn-secondary">Ver más</a>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <img src="https://cinemags.org/wp-content/uploads/2023/06/poor-things.jpg" alt="Peliculas" class="card-img-top">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Peliculas</h3> <!-- Centrar el título -->
+                        <p class="card-text text-center">Peliculas (pendiente rellenar).</p> <!-- Centrar el texto -->
+                        <a href="/peliculas" class="btn btn-secondary btn-block">Ver más</a> <!-- Hacer el botón de ancho completo -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <img src="https://www.liveforfilm.com/wp-content/uploads/2020/04/kubrick-550x370.jpeg" alt="Directores" class="card-img-top">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Directores</h3> <!-- Centrar el título -->
+                        <p class="card-text text-center">Directores (Pendiente rellenar).</p> <!-- Centrar el texto -->
+                        <a href="/directores" class="btn btn-secondary btn-block">Ver más</a> <!-- Hacer el botón de ancho completo -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
+<%- include('partials/footer.html') %>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-<%- include('partials/footer.html') %>
+
 </html>

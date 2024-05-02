@@ -3,27 +3,75 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
     <%- include('partials/navbar.html') %>
+    <style>
+        body {
+            background-color: #343a40; /* Color de fondo oscuro */
+            color: white; /* Color del texto */
+            padding-top: 70px; /* Añadir espacio al principio */
+        }
+
+        h1 {
+            text-align: center; /* Centrar el título */
+            margin-top: 20px; /* Espacio superior */
+        }
+
+        form {
+            width: 60%; /* Ancho del formulario */
+            margin: 0 auto; /* Centrar el formulario */
+        }
+
+        label {
+            display: block; /* Mostrar las etiquetas en bloques */
+            margin-top: 10px; /* Espacio superior */
+        }
+
+        input[type="text"],
+        input[type="imagen"],
+        input[type="submit"] {
+            width: 100%; /* Ancho completo */
+            padding: 8px; /* Añadir espacio interno */
+            margin-top: 5px; /* Espacio superior */
+            box-sizing: border-box; /* Incluir el padding en el ancho total */
+        }
+
+        input[type="submit"] {
+            background-color: #007bff; /* Color de fondo del botón */
+            color: white; /* Color del texto del botón */
+            border: none; /* Quitar borde */
+            cursor: pointer; /* Cambiar cursor al pasar por encima */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3; /* Color de fondo del botón al pasar el mouse */
+        }
+    </style>
 </head>
 <body>
-<h1> UPDATE ITEM</h1>
+
+<%- include('partials/navbar.html') %>
+
+<h1>Actualizar Ítem</h1>
+
 <form action="/directores/update" method="POST">
 
-    <input id="_id" type="hidden" name="_id" value="<%= item._id%>">
+    <input id="_id" type="hidden" name="_id" value="<%= item._id %>">
 
     <label for="nombre">Nombre</label>
-    <input id="nombre" type="text" name="nombre" value="<%= item.nombre%>" >
+    <input id="nombre" type="text" name="nombre" value="<%= item.nombre %>">
 
-    <label for="nacionalidad">nacionalidad</label>
-    <input id="nacionalidad" type="text" name="nacionalidad" value="<%= item.nacionalidad%>" >
+    <label for="nacionalidad">Nacionalidad</label>
+    <input id="nacionalidad" type="text" name="nacionalidad" value="<%= item.nacionalidad %>">
 
-    <label for="genero">genero</label>
-    <input id="genero" type="text" name="genero" value="<%= item.genero%>" >
+    <label for="genero">Género</label>
+    <input id="genero" type="text" name="genero" value="<%= item.genero %>">
 
-    <label for="iamgen">imagen</label>
-    <input type="imagen" id="iamgen" value="<%= item.imagen%>">
+    <label for="imagen">Imagen</label>
+    <input type="text" id="imagen" name="imagen" value="<%= item.imagen %>">
 
-    <input type="submit" value="update">
+    <input type="submit" value="Actualizar">
 </form>
-</body>
+
 <%- include('partials/footer.html') %>
+
+</body>
 </html>

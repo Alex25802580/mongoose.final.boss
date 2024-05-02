@@ -5,17 +5,63 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/equipos.css'/>
     <%- include('partials/navbar.html') %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #343a40; /* Color de fondo oscuro */
+            color: white; /* Color del texto */
+            padding-top: 70px; /* Añadir espacio al principio */
+        }
+
+        h1 {
+            text-align: center; /* Centrar el título */
+            margin-top: 20px; /* Espacio superior */
+        }
+
+        table {
+            width: 80%; /* Ancho de la tabla */
+            margin: 0 auto; /* Centrar la tabla */
+            border-collapse: collapse; /* Colapsar los bordes de la tabla */
+        }
+
+        th, td {
+            padding: 10px; /* Añadir espacio interno */
+            border: 1px solid #dee2e6; /* Borde sólido */
+        }
+
+        th {
+            background-color: #007bff; /* Color de fondo del encabezado */
+            color: white; /* Color del texto del encabezado */
+            text-align: center; /* Centrar el texto del encabezado */
+        }
+
+        td {
+            text-align: center; /* Centrar el texto de las celdas */
+        }
+
+        .action_delete_director, .action_delete_director:hover {
+            color: #dc3545; /* Color del enlace y al pasar el mouse */
+            text-decoration: none; /* Quitar subrayado */
+            cursor: pointer; /* Cambiar cursor al pasar por encima */
+        }
+
+        .action_delete_director:hover {
+            text-decoration: underline; /* Subrayar al pasar el mouse */
+        }
+    </style>
 </head>
 <body>
-<h1> Detalles del Director</h1>
+
+<%- include('partials/navbar.html') %>
+
+<h1><%= title %></h1>
+
 <table>
     <thead>
     <tr>
         <th>ID</th>
         <th>Nombre</th>
         <th>Nacionalidad</th>
-        <th>Genero</th>
+        <th>Género</th>
         <th>Imagen</th>
         <th>Acciones</th>
     </tr>
@@ -35,14 +81,13 @@
         </tr>
     <% } else { %>
         <tr>
-            <td colspan="7">No se encontró el director</td>
-        </tr>
-        <tr>
-            <td colspan="6">No se encontraron directores</td>
+            <td colspan="6">No se encontró el director</td>
         </tr>
     <% } %>
     </tbody>
 </table>
+
+<%- include('partials/footer.html') %>
 
 <script>
     async function delete_director(evt){
@@ -66,5 +111,4 @@
 </script>
 
 </body>
-<%- include('partials/footer.html') %>
 </html>

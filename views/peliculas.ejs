@@ -1,70 +1,105 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title><%=title%></title>
-    <link rel='stylesheet' href='/stylesheets/pilotos.css'/>
-    <%- include('partials/navbar.html') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: #343a40; /* Cambiar el color de fondo */
+            color: white; /* Cambiar el color del texto */
+            padding-top: 70px; /* Añadir espacio al principio */
+        }
+
+        table {
+            width: 100%; /* Hacer la tabla ocupar todo el ancho */
+            border-collapse: collapse; /* Colapsar los bordes de la tabla */
+        }
+
+        th, td {
+            padding: 8px; /* Añadir espacio interno */
+            text-align: left; /* Alinear el texto a la izquierda */
+            border-bottom: 1px solid #555; /* Añadir borde inferior */
+        }
+
+        th {
+            background-color: #212529; /* Cambiar el color de fondo de las cabeceras */
+        }
+
+        img {
+            border-radius: 10px; /* Agregar borde redondeado a las imágenes */
+            height: 150px; /* Definir la altura de las imágenes */
+            object-fit: cover; /* Ajustar la imagen para cubrir el contenedor */
+        }
+
+        .btn {
+            margin-right: 5px; /* Añadir espacio entre los botones */
+        }
+    </style>
 </head>
+
 <body>
-<h1> Lista de Peliculas</h1>
-<table>
+
+<%- include('partials/navbar.html') %>
+
+<h1 class="text-center mt-5">Lista de Películas</h1>
+
+<table class="mt-3">
     <thead>
     <tr>
         <th>ID</th>
         <th>Nombre</th>
-        <th>Duracion</th>
+        <th>Duración</th>
         <th>Premios</th>
         <th>Imagen</th>
         <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <% peliculas.forEach( function (peliculas){ %>
-
+    <% peliculas.forEach(function(pelicula) { %>
         <tr>
-            <td> <%= peliculas.id %> </td>
-            <td> <%= peliculas.nombre %></td>
-            <td> <%= peliculas.duracion %></td>
-            <td> <%= peliculas.premios %></td>
-            <td><img src="<%= peliculas.imagen %>" alt="" height="150px"></td>
+            <td><%= pelicula.id %></td>
+            <td><%= pelicula.nombre %></td>
+            <td><%= pelicula.duracion %></td>
+            <td><%= pelicula.premios %></td>
+            <td><img src="<%= pelicula.imagen %>" alt=""></td>
             <td>
-                <a href="#" data-pelicula-id="<%= peliculas.id%>" class="action_delete_pelicula">Delete</a>
-                <a href="/peliculas/update/<%= peliculas.id%>" >Update</a>
-                <a href="/peliculas/detalles/<%= peliculas.id%>">Detalles</a>
+                <a href="#" data-pelicula-id="<%= pelicula.id %>" class="btn btn-danger action_delete_pelicula">Eliminar</a>
+                <a href="/peliculas/update/<%= pelicula.id %>" class="btn btn-secondary">Actualizar</a>
+                <a href="/peliculas/detalles/<%= pelicula.id %>" class="btn btn-secondary">Detalles</a>
             </td>
-
         </tr>
-    <% } ) %>
-
+    <% }); %>
     </tbody>
 </table>
 
 <script>
-    async function delete_pelicula(evt){
-        evt.preventDefault() // no sigas tu comportamiento por defecto
-        let id = $(this).data('pelicula-id')
+    async function delete_pelicula(evt) {
+        evt.preventDefault();
+        let id = $(this).data('pelicula-id');
         try {
             await $.ajax({
-                url: '/api/peliculas/'  + id,
+                url: '/api/peliculas/' + id,
                 type: 'DELETE'
-            })
-            window.location.reload()
-
-        }catch (e) {
-            console.log(e)
-            console.log('Error' + e.status + " " + e.statusText)
+            });
+            window.location.reload();
+        } catch (e) {
+            console.log(e);
+            console.log('Error' + e.status + " " + e.statusText);
         }
     }
 
-    $(document).ready(() =>{
-        document.getElementsByClassName('action_delete_pelicula')
-        $('.action_delete_pelicula').click(delete_pelicula())
+    $(document).ready(() => {
+        $('.action_delete_pelicula').click(delete_pelicula);
     });
 </script>
 
-</body>
 <%- include('partials/footer.html') %>
+
+</body>
+
 </html>
