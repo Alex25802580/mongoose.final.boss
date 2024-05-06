@@ -66,9 +66,7 @@
         <th>Nombre</th>
         <th>Duración</th>
         <th>Premios</th>
-        <th>Descripción</th>
         <th>Imagen</th>
-        <th>Director</th>
         <th>Acciones</th>
     </tr>
     </thead>
@@ -79,12 +77,12 @@
             <td> <%= pelicula.nombre %></td>
             <td> <%= pelicula.duracion %></td>
             <td> <%= pelicula.premios %></td>
-            <td> <%= pelicula.descripcion %></td>
             <td><img src="<%= pelicula.imagen %>" alt="" height="150px"></td>
-            <td> <%= pelicula.director %></td>
             <td>
-                <a href="#" data-pelicula-id="<%= pelicula._id %>" class="action_delete_pelicula">Eliminar</a> <!-- Cambio aquí -->
-                <a href="/peliculas/update/<%= pelicula._id %>" >Actualizar</a> <!-- Cambio aquí -->
+                <div>
+                <a href="#" data-pelicula-id="<%= pelicula.id %>" class="btn btn-danger action_delete_pelicula">Eliminar Película</a>
+                </div>
+                <a href="/peliculas/update/<%= pelicula.id %>" class="btn btn-secondary">Actualizar Película</a>
             </td>
         </tr>
 
@@ -123,4 +121,3 @@
 </body>
 <%- include('partials/footer.html') %>
 </html>
-s

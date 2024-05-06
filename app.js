@@ -76,7 +76,7 @@ app.post("/api/directores/update/:id", async (req, res)=>{
 });
 
 
-// ELIMINAR UN ITEM DE EQUIPOS POR ID
+// ELIMINAR UN ITEM DE DIRECTORES POR ID
 app.delete('/api/directores/:id', async (req, res)=>{
     const id = req.params.id
     try{
@@ -135,7 +135,7 @@ app.post("/api/peliculas/update/:id", async (req, res)=>{
     let params = req.body;
     console.log(params)
     try{
-        const peliculaUpdated = await piloto.findOneAndUpdate({_id: id},{$set: params},{new: true});
+        const peliculaUpdated = await pelicula.findOneAndUpdate({_id: id},{$set: params},{new: true});
 
         res.status(200).json({success: true, message: 'Updatedado Correctamente'});
         console.log('Updateado id: ', id)
@@ -145,7 +145,7 @@ app.post("/api/peliculas/update/:id", async (req, res)=>{
     }
 });
 
-// ELIMINAR UN ITEM DE PILOTOS POR ID
+// ELIMINAR UN ITEM DE PELICULA POR ID
 app.delete('/api/peliculas/:id',async (req, res)=>{
     const id = req.params.id
     try{
@@ -176,7 +176,7 @@ app.post('/api/peliculas', async (req, res)=>{
 });
 
 ////////////////////////////////////////// WEB //////////////////////////////////////
-//////////////////////////// PILOTOS ///////////////////////////////
+//////////////////////////// PELICULA ///////////////////////////////
 
 // INDEX
 app.get('/', (req, res) => {
@@ -240,8 +240,8 @@ app.post("/peliculas/update", async (req, res)=>{
     const {_id,nombre,duracion,premios,imagen} = req.body
     console.log('params',{_id,nombre,duracion,premios,imagen})
     try {
-        const result = await piloto.findByIdAndUpdate(_id,{_id,nombre,duracion,premios,imagen},{new:true});
-        console.log('insertado!', result)
+        const result = await pelicula.findByIdAndUpdate(_id,{_id,nombre,duracion,premios,imagen},{new:true});
+        console.log('insertada!', result)
         res.redirect('/peliculas')
     }catch (e) {
         console.log(e)
@@ -269,7 +269,7 @@ app.post('/piliculas/insert',async (req, res)=>{
     }
 });
 
-//////////////////////////// EQUIPOS ///////////////////////////////
+//////////////////////////// DIRECTORES ///////////////////////////////
 
 // Show ALL Items
 

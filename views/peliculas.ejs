@@ -59,7 +59,6 @@
 <table class="mt-3">
     <thead>
     <tr>
-        <th>ID</th>
         <th>Nombre</th>
         <th>Duración</th>
         <th>Premios</th>
@@ -70,15 +69,12 @@
     <tbody>
     <% peliculas.forEach(function(pelicula) { %>
         <tr>
-            <td><%= pelicula.id %></td>
             <td><%= pelicula.nombre %></td>
             <td><%= pelicula.duracion %></td>
             <td><%= pelicula.premios %></td>
             <td><img src="<%= pelicula.imagen %>" alt=""></td>
             <td>
-                <a href="#" data-pelicula-id="<%= pelicula.id %>" class="btn btn-danger action_delete_pelicula">Eliminar</a>
-                <a href="/peliculas/update/<%= pelicula.id %>" class="btn btn-secondary">Actualizar</a>
-                <a href="/peliculas/detalles/<%= pelicula.id %>" class="btn btn-secondary">Detalles</a>
+                <a href="/peliculas/detalles/<%= pelicula.id %>" class="btn btn-secondary">Detalles Película</a>
             </td>
         </tr>
     <% }); %>

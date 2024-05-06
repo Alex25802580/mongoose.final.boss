@@ -79,10 +79,10 @@
             <td><%= director.nacionalidad %></td>
             <td><%= director.genero %></td>
             <td><%= director.descripcion %></td>
-            <td><%= director.imagen %></td>
+            <td><img src="<%= director.imagen %>" alt ="" height="150px"></td>
             <td>
-                <a href="/directores" data-director-id="<%= director.id%>" class="action_delete_director">Eliminar</a>
-                <a href="/directores/update/<%= director.id %>" >Actualizar</a>
+                <a href="#" data-director-id="<%= director.id %>" class="btn btn-danger action_delete_director">Eliminar</a>
+                <a href="/directores/update/<%= director.id %>" class="btn btn-secondary">Actualizar</a>
             </td>
         </tr>
     <% } else { %>
