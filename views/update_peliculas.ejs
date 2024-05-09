@@ -63,7 +63,7 @@
 
 <%- include('partials/navbar.html') %>
 
-<h1><%= title %></h1>
+<h1>Actualizar ítem></h1>
 <li class="nav-item">
     <a class="nav-link btn btn-primary" href="/peliculas">Volver</a>
 </li>
@@ -71,18 +71,18 @@
 
 <form action="/peliculas/update" method="POST">
 
-    <input id="id" type="hidden" name="id" value="<%= peliculas.id %>">
+    <input id="_id" type="hidden" name="_id" value="<%= item._id %>">
     <label for="nombre">Nombre</label>
-    <input id="nombre" type="text" name="nombre" value="<%= peliculas.nombre %>">
+    <input id="nombre" type="text" name="nombre" value="<%= item.nombre %>">
 
     <label for="duracion">Duración</label>
-    <input id="duracion" type="text" name="duracion" value="<%= peliculas.duracion %>" >
+    <input id="duracion" type="text" name="duracion" value="<%= item.duracion %>" >
 
     <label for="premios">Premios</label>
-    <input id="premios" type="text" name="premios" value="<%= peliculas.premios %>" >
+    <input id="premios" type="text" name="premios" value="<%= item.premios %>" >
 
     <label for="imagen">Imagen</label>
-    <input id="imagen" type="text" name="imagen" value="<%= peliculas.imagen %>" >
+    <input id="imagen" type="text" name="imagen" value="<%= item.imagen %>" >
 
     <input type="submit" value="Actualizar">
 </form>

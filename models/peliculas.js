@@ -4,7 +4,7 @@ const peliculaSchema = new mongoose.Schema({
     nombre: { type: String, required: true },
     duracion: { type: String, required: true },
     premios: { type: Number, required: true },
-    descripcion: { type: String, required: true },
+    descripcion: { type: String, required: false },
     imagen: { type: String, required: false },
 });
 

@@ -74,6 +74,24 @@ app.post("/api/directores/update/:id", async (req, res)=>{
         res.send('Error en el servidor.')
     }
 });
+app.post("/api/peliculas/update/:id", async (req, res)=>{
+    let id = req.params.id;
+    let params = req.body;
+    console.log(params)
+    try{
+        const peliculaUpdate = await pelicula.findOneAndUpdate({_id: id},{$set: params},{new: true});
+        if (!peliculaUpdate){
+            res.status(404).json({succes: false, message: 'No econtrado, Error'})
+        }
+
+        res.status(200).json({success: true, message: 'Updatedado Correctamente'});
+        console.log('Updateado id: ', id)
+    } catch (error){
+        console.log(error)
+        res.send('Error en el servidor.')
+    }
+});
+
 
 
 // ELIMINAR UN ITEM DE DIRECTORES POR ID
@@ -135,7 +153,7 @@ app.post("/api/peliculas/update/:id", async (req, res)=>{
     let params = req.body;
     console.log(params)
     try{
-        const peliculaUpdated = await pelicula.findOneAndUpdate({_id: id},{$set: params},{new: true});
+        const peliculaUpdate = await pelicula.findOneAndUpdate({_id: id},{$set: params},{new: true});
 
         res.status(200).json({success: true, message: 'Updatedado Correctamente'});
         console.log('Updateado id: ', id)
@@ -189,6 +207,13 @@ app.get('/contacto', (req, res) => {
 app.get('/about', (req, res) => {
     res.render('about',{title:'About'})
 });
+app.get('/peliculas/insert', (req,res)=>{
+    res.render('insert_peliculas', {
+        title: 'Insertar Película',
+        peliculas: { nombre: '', duracion: '', premios: '', imagen: '' }
+    });
+});
+
 
 app.get('/directores/detalles/:id',async (req, res) => {
     const id = req.params.id
@@ -223,24 +248,26 @@ app.get('/peliculas', async (req, res) => {
     console.log(params)
     res.render('peliculas', params);
 });
-// UPDATE ITEM
+//UPDATE ITEM
 app.get('/peliculas/update/:id', async (req,res)=>{
     const id = req.params.id
     const query = await pelicula.findById(id);
     console.log(query)
     const params = {
         title: 'Update Pelicula',
-        peliculas: query
+        item: query
     }
     res.render('update_peliculas', params)
 });
 
-// Update quipo
+
+
+//Update quipo
 app.post("/peliculas/update", async (req, res)=>{
     const {_id,nombre,duracion,premios,imagen} = req.body
     console.log('params',{_id,nombre,duracion,premios,imagen})
     try {
-        const result = await pelicula.findByIdAndUpdate(_id,{_id,nombre,duracion,premios,imagen},{new:true});
+        const result = await pelicula.findByIdAndUpdate(_id,{nombre,duracion,premios,imagen},{new:true});
         console.log('insertada!', result)
         res.redirect('/peliculas')
     }catch (e) {
@@ -248,26 +275,24 @@ app.post("/peliculas/update", async (req, res)=>{
         res.status(500).send('error en el servidor')
     }
 });
-// INSERT ITEM GET: show form
-app.get('/piliculas/insert', (req,res)=>{
-    res.render('insert_peliculas',
-        {title:'insert pelicula'}
-    )
-});
+
+
+//INSERT ITEM GET: show form
+
 
 //Insertar pelicula
-app.post('/piliculas/insert',async (req, res)=>{
-    const {_id,nombre,duracion,premios,imagen,} = req.body
-    console.log('params',{_id,nombre,duracion,premios,imagen})
+app.post('/peliculas/insert', async (req, res) => {
+    const { nombre, duracion, premios, imagen } = req.body;
     try {
-        const result = await pelicula.create({nombre,duracion,premios,imagen})
-        console.log('insertado!', result)
-        res.redirect('/peliculas')
-    }catch (e) {
-        console.log(e)
-        res.status(500).send('error en el servidor')
+        const result = await pelicula.create({ nombre, duracion, premios, imagen });
+        console.log('Película insertada:', result);
+        res.redirect('/peliculas');
+    } catch (error) {
+        console.error('Error al insertar la película:', error);
+        res.status(500).send('Error al insertar la película');
     }
 });
+
 
 //////////////////////////// DIRECTORES ///////////////////////////////
 
