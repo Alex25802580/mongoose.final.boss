@@ -172,14 +172,13 @@ app.delete('/api/peliculas/:id',async (req, res)=>{
         if (peliculaElim) {
             res.send('Pelicula eliminado correctamente');
         } else {
-            res.status(404).send('Pelicula no encontrado');
+            res.status(404).send('Pelicula no encontrada');
         }
     }catch (e){
         console.log(e);
         res.send('Error en el servidor')
     }
 });
-
 // INSERTAR UN NUEVO ITEM A PELICULA
 app.post('/api/peliculas', async (req, res)=>{
     const params = req.body;
@@ -214,7 +213,17 @@ app.get('/peliculas/insert', (req,res)=>{
     });
 });
 
-
+app.get('/directores/insert', (req,res)=>{
+    res.render('insert_directores', {
+        title: 'Insertar Director',
+        directores: { nombre: '', nacionalidad: '', genero: '', imagen: '' }
+    });
+});
+// app.get('/directores/insert', (req,res)=>{
+//     res.render('insert_directores',
+//         {title:'insert directores'}
+//     )
+// });
 app.get('/directores/detalles/:id',async (req, res) => {
     const id = req.params.id
     const query = await director.findById(id);

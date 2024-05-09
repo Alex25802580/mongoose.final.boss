@@ -67,7 +67,6 @@
         <th>Nombre</th>
         <th>Nacionalidad</th>
         <th>Género</th>
-        <th>Descripción</th>
         <th>Imagen</th>
         <th>Acciones</th>
     </tr>
@@ -78,10 +77,11 @@
             <td><%= director.nombre %></td>
             <td><%= director.nacionalidad %></td>
             <td><%= director.genero %></td>
-            <td><%= director.descripcion %></td>
             <td><img src="<%= director.imagen %>" alt ="" height="150px"></td>
             <td>
-                <a href="#" data-director-id="<%= director.id %>" class="btn btn-danger action_delete_director">Eliminar</a>
+                <div>
+                <a href="# " data-director-id="<%= director.id %>" class="btn btn-danger action_delete_director">Eliminar Director</a>
+                </div>
                 <a href="/directores/update/<%= director.id %>" class="btn btn-secondary">Actualizar</a>
             </td>
         </tr>

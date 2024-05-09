@@ -63,6 +63,7 @@
 <table class="mt-3">
     <thead>
     <tr>
+
         <th>Nombre</th>
         <th>Duración</th>
         <th>Premios</th>
@@ -85,27 +86,6 @@
     </tbody>
 </table>
 
-
-<script>
-    async function delete_pelicula(evt) {
-        evt.preventDefault();
-        let id = $(this).data('pelicula-id');
-        try {
-            await $.ajax({
-                url: '/api/peliculas/' + id,
-                type: 'DELETE'
-            });
-            window.location.reload();
-        } catch (e) {
-            console.log(e);
-            console.log('Error' + e.status + " " + e.statusText);
-        }
-    }
-
-    $(document).ready(() => {
-        $('.action_delete_pelicula').click(delete_pelicula);
-    });
-</script>
 
 <%- include('partials/footer.html') %>
 

@@ -53,6 +53,10 @@
     <li class="nav-item">
         <a class="nav-link btn btn-success" href="/peliculas">Ir a Películas</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link btn btn-success" href="/directores/insert">Insertar director</a>
+
+    </li>
 </ul>
 
 <table class="mt-3">
@@ -85,27 +89,6 @@
     <% } %>
     </tbody>
 </table>
-
-<script>
-    async function delete_director(evt) {
-        evt.preventDefault();
-        let id = $(this).data('director-id');
-        try {
-            await $.ajax({
-                url: '/api/directores/' + id,
-                type: 'DELETE'
-            });
-            window.location.reload();
-        } catch (e) {
-            console.log(e);
-            console.log('Error' + e.status + " " + e.statusText);
-        }
-    }
-
-    $(document).ready(() => {
-        $('.action_delete_director').click(delete_director);
-    });
-</script>
 
 <%- include('partials/footer.html') %>
 

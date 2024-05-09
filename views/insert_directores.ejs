@@ -1,27 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('partials/navbar.html') %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+    <style>
+        body {
+            background-color: #343a40;
+            color: white;
+            padding-top: 70px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        form {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            background-color: white;
+            color: #495057;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 8px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
-<h1> INSERT ITEM</h1>
-<form action="/directores/insert" method="POST">
 
-    <label for="nombre">nombre</label>
+<%- include('partials/navbar.html') %>
+
+<h1>Insertar Director</h1>
+<li class="nav-item">
+    <a class="nav-link btn btn-primary" href="/directores">Volver</a>
+</li>
+
+<form action="/directores/insert" method="POST">
+    <label for="nombre">Nombre</label>
     <input id="nombre" type="text" name="nombre">
 
-    <label for="nacionalidad">nacionalidad</label>
+    <label for="nacionalidad">Nacionalidad</label>
     <input id="nacionalidad" type="text" name="nacionalidad">
 
-    <label for="genero">genero</label>
-    <input id="genero" type="number" name="imagen">
+    <label for="genero">Género</label>
+    <input id="genero" type="text" name="genero">
 
-    <label for="imagen">imagen</label>
+    <label for="imagen">Imagen</label>
     <input id="imagen" type="text" name="imagen">
 
-    <input type="submit" value="insert">
+    <input type="submit" value="Insertar">
 </form>
-</body>
+
 <%- include('partials/footer.html') %>
+
+</body>
 </html>
