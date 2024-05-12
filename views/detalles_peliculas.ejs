@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/pilotos.css'/>
     <%- include('partials/navbar.html') %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
@@ -62,36 +61,34 @@
 <table>
     <thead>
     <tr>
-
         <th>Nombre</th>
         <th>Duración</th>
         <th>Premios</th>
         <th>Imagen</th>
+        <th>Director</th>
         <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
     <% if (pelicula) { %>
-
         <tr>
-            <td> <%= pelicula.nombre %></td>
-            <td> <%= pelicula.duracion %></td>
-            <td> <%= pelicula.premios %></td>
+            <td><%= pelicula.nombre %></td>
+            <td><%= pelicula.duracion %></td>
+            <td><%= pelicula.premios %></td>
             <td><img src="<%= pelicula.imagen %>" alt="" height="150px"></td>
+            <td><%= pelicula.director ? pelicula.director.nombre : 'Director no encontrado' %></td>
             <td>
                 <div>
-                <a href="#" data-pelicula-id="<%= pelicula.id %>" class="btn btn-danger action_delete_pelicula">Eliminar Película</a>
+                    <a href="#" data-pelicula-id="<%= pelicula.id %>" class="btn btn-danger action_delete_pelicula">Eliminar Película</a>
                 </div>
                 <a href="/peliculas/update/<%= pelicula.id %>" class="btn btn-secondary">Actualizar Película</a>
             </td>
         </tr>
-
     <% } else { %>
         <tr>
-            <td colspan="6">No se encontró la película</td>
+            <td colspan="6">Película eliminada correctamente</td>
         </tr>
     <% } %>
-
     </tbody>
 </table>
 
@@ -103,18 +100,17 @@
         let id = $(this).data('pelicula-id');
         try {
             await $.ajax({
-                url: '/api/peliculas/'  + id, <!-- Cambio aquí -->
+                url: '/api/peliculas/'  + id,
                 type: 'DELETE'
             });
             window.location.reload();
-
         } catch (e) {
             console.log('Error' + e.status + " " + e.statusText);
         }
     }
 
     $(document).ready(() =>{
-        $('.action_delete_pelicula').click(delete_pelicula); // Corrección aquí
+        $('.action_delete_pelicula').click(delete_pelicula);
     });
 </script>
 

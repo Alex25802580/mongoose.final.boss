@@ -63,10 +63,7 @@
 <table class="mt-3">
     <thead>
     <tr>
-
         <th>Nombre</th>
-        <th>Duración</th>
-        <th>Premios</th>
         <th>Imagen</th>
         <th>Acciones</th>
     </tr>
@@ -75,8 +72,6 @@
     <% peliculas.forEach(function(pelicula) { %>
         <tr>
             <td><%= pelicula.nombre %></td>
-            <td><%= pelicula.duracion %></td>
-            <td><%= pelicula.premios %></td>
             <td><img src="<%= pelicula.imagen %>" alt=""></td>
             <td>
                 <a href="/peliculas/detalles/<%= pelicula.id %>" class="btn btn-secondary">Detalles Película</a>

@@ -15,6 +15,22 @@ mongoose.connect(mongoURI, {
 
 const db = mongoose.connection;
 
+const Schema = mongoose.Schema;
+
+const peliculaSchema = new Schema({
+    nombre: String,
+    duracion: String,
+    premios: Number,
+    imagen: String,
+    director: {
+        type: Schema.Types.ObjectId,
+        ref: 'Director' // Nombre del modelo al que se hace referencia
+    }
+});
+
+module.exports = mongoose.model('peliculas', peliculaSchema);
+
+
 db.on('error', (error) => {
     console.error('Error al conectar a la base de datos:', error);
 });
@@ -36,6 +52,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const director = require('./models/Director'); // Importa el modelo Director
 const pelicula = require('./models/peliculas'); // Importa el modelo Pelicula
+
 
 
 // MUESTRA TODOS LOS directores
@@ -98,8 +115,8 @@ app.post("/api/peliculas/update/:id", async (req, res)=>{
 app.delete('/api/directores/:id', async (req, res)=>{
     const id = req.params.id
     try{
-        const eliminarDirector = await director.deleteOne({_id:id});
-        console.log(eliminarDirector)
+        const deletedDirector = await director.deleteOne({_id:id});
+        console.log(deletedDirector)
         if (deletedDirector) {
             res.send('Director eliminado correctamente');
         } else {
@@ -139,10 +156,19 @@ app.get('/api/peliculas',async (req, res) => {
 });
 
 // ITEMS DETAIL
-app.get('/api/peliculas/:id',async (req, res)=>{
-    const id = req.params.id
-    const result = await pelicula.findById(id);
-    res.status(200).send(result)
+app.get('/api/peliculas/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const result = await pelicula.findById(id).populate('director');
+        if (result) {
+            res.status(200).send(result);
+        } else {
+            res.status(404).send("Película no encontrada");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error en el servidor");
+    }
 });
 
 
@@ -179,6 +205,7 @@ app.delete('/api/peliculas/:id',async (req, res)=>{
         res.send('Error en el servidor')
     }
 });
+
 // INSERTAR UN NUEVO ITEM A PELICULA
 app.post('/api/peliculas', async (req, res)=>{
     const params = req.body;
@@ -219,11 +246,7 @@ app.get('/directores/insert', (req,res)=>{
         directores: { nombre: '', nacionalidad: '', genero: '', imagen: '' }
     });
 });
-// app.get('/directores/insert', (req,res)=>{
-//     res.render('insert_directores',
-//         {title:'insert directores'}
-//     )
-// });
+
 app.get('/directores/detalles/:id',async (req, res) => {
     const id = req.params.id
     const query = await director.findById(id);
@@ -235,16 +258,24 @@ app.get('/directores/detalles/:id',async (req, res) => {
     res.render('detalles_directores', params)
 });
 
-app.get('/peliculas/detalles/:id',async (req, res) => {
-    const id = req.params.id
-    const query = await pelicula.findById(id);
-    console.log(query)
-    const params = {
-        title: 'Detalles Pelicula',
-        pelicula: query
+app.get('/peliculas/detalles/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const peliculaDetalles = await pelicula.findById(id).populate('director');
+        if (peliculaDetalles) {
+            console.log(peliculaDetalles); // Agrega este console.log para imprimir la información de la película
+            res.render('detalles_peliculas', { title: 'Detalles Película', pelicula: peliculaDetalles });
+        } else {
+            res.status(404).send("Película no encontrada");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error en el servidor");
     }
-    res.render('detalles_peliculas', params)
 });
+
+
+
 
 // Show ALL Items
 app.get('/peliculas', async (req, res) => {

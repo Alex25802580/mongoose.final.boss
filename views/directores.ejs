@@ -92,6 +92,27 @@
 
 <%- include('partials/footer.html') %>
 
-</body>
+<script>
+    async function delete_director(evt){
+        evt.preventDefault();
+        let id = $(this).data('director-id');
+        try {
+            await $.ajax({
+                url: '/api/directores/' + id,
+                type: 'DELETE',
+            });
+            window.location.reload();
 
+        } catch (e) {
+            console.log('Error' + e.status + " " + e.statusText);
+        }
+    }
+
+    $(document).ready(() =>{
+        $('.action_delete_director').click(delete_director); // Corrección aquí
+    });
+</script>
+
+</body>
+<%- include('partials/footer.html') %>
 </html>

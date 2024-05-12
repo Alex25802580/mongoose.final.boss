@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='/stylesheets/equipos.css'/>
     <%- include('partials/navbar.html') %>
     <style>
+
         body {
             background-color: #343a40; /* Color de fondo oscuro */
             color: white; /* Color del texto */
@@ -48,18 +49,16 @@
             text-decoration: underline; /* Subrayar al pasar el mouse */
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <%- include('partials/navbar.html') %>
 
 <h1><%= title %></h1>
-<ul class="nav">
-    <li class="nav-item">
-        <a class="nav-link btn btn-primary" href="/directores">Volver</a>
-    </li>
-
-</ul>
+<li class="nav-item">
+    <a class="nav-link btn btn-primary" href="/directores">Volver</a>
+</li>
 
 <table>
     <thead>
@@ -74,22 +73,24 @@
     <tbody>
     <% if (director) { %>
         <tr>
-            <td><%= director.nombre %></td>
-            <td><%= director.nacionalidad %></td>
-            <td><%= director.genero %></td>
+            <td> <%= director.nombre %></td>
+            <td> <%= director.nacionalidad %></td>
+            <td> <%= director.genero %></td>
             <td><img src="<%= director.imagen %>" alt ="" height="150px"></td>
             <td>
                 <div>
-                <a href="# " data-director-id="<%= director.id %>" class="btn btn-danger action_delete_director">Eliminar Director</a>
+                    <a href="#" data-director-id="<%= director.id %>" class="btn btn-danger action_delete_director">Eliminar Director</a>
                 </div>
                 <a href="/directores/update/<%= director.id %>" class="btn btn-secondary">Actualizar</a>
             </td>
         </tr>
+
     <% } else { %>
         <tr>
-            <td colspan="6">No se encontró el director</td>
+            <td colspan="6">Director eliminado correctamente</td>
         </tr>
     <% } %>
+
     </tbody>
 </table>
 
@@ -98,23 +99,23 @@
 <script>
     async function delete_director(evt){
         evt.preventDefault();
+        console.log('Función delete_director llamada');
         let id = $(this).data('director-id');
         try {
             await $.ajax({
-                url: '/api/directores/'  + id,
-                type: 'DELETE'
+                url: '/api/directores/' + id,
+                type: 'DELETE',
             });
             window.location.reload();
-
         } catch (e) {
             console.log('Error' + e.status + " " + e.statusText);
         }
     }
-
     $(document).ready(() =>{
         $('.action_delete_director').click(delete_director);
-    });
+         });
 </script>
 
 </body>
+<%- include('partials/footer.html') %>
 </html>
