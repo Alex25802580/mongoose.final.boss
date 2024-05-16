@@ -76,7 +76,7 @@
             <td><%= pelicula.duracion %></td>
             <td><%= pelicula.premios %></td>
             <td><img src="<%= pelicula.imagen %>" alt="" height="150px"></td>
-            <td><%= pelicula.director ? pelicula.director.nombre : 'Director no encontrado' %></td>
+            <td><%=  pelicula.director.nombre %></td>
             <td>
                 <div>
                     <a href="#" data-pelicula-id="<%= pelicula.id %>" class="btn btn-danger action_delete_pelicula">Eliminar Película</a>

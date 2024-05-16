@@ -1,14 +1,24 @@
 const mongoose = require('mongoose');
 
 const peliculaSchema = new mongoose.Schema({
-    nombre: { type: String, required: true },
-    duracion: { type: String, required: true },
-    premios: { type: Number, required: true },
-    descripcion: { type: String, required: false },
-    imagen: { type: String, required: false },
-    director: { type: mongoose.Schema.Types.ObjectId, ref: 'Director' } // Referencia al modelo Director
+    director: {
+        _id:mongoose.Schema.Types.ObjectId,
+        nombre: String,
+        nacionalidad: String,
+        genero: String,
+        descripcion: String,
+        imagen: String,
+    },
+    nombre: String,
+    duracion: String,
+    premios: String,
+    descripcion: String,
+    imagen: String,
+
+
 });
 
-const Pelicula = mongoose.model('Pelicula', peliculaSchema, 'peliculas');
+const Pelicula = mongoose.model('Pelicula', peliculaSchema);
 
 module.exports = Pelicula;
+
