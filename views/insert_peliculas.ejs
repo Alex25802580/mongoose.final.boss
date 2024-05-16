@@ -47,7 +47,7 @@
 
         input[type="text"] {
             background-color: white; /* Color de fondo blanco para los campos de texto */
-            color: #495057; /* Color del texto en los campos de texto */
+            color: darkorchid; /* Color del texto en los campos de texto */
             border: 1px solid #ced4da; /* Añadir un borde a los campos de texto */
             border-radius: 4px; /* Agregar bordes redondeados a los campos de texto */
             padding: 8px; /* Añadir espacio interno */
@@ -60,7 +60,6 @@
 
 <body>
 
-
 <%- include('partials/navbar.html') %>
 
 <h1>Insertar Película</h1>
@@ -68,21 +67,26 @@
     <a class="nav-link btn btn-primary" href="/peliculas">Volver</a>
 </li>
 
-
 <form action="/peliculas/insert" method="POST">
 
+    <label for="director">Director</label>
+    <select name="director" id="director_id">
+        <% directores.forEach(function (director) { %>
+            <option value="<%= director._id %>"><%= director.nombre %></option>
+        <% }); %>
+    </select>
 
     <label for="nombre">Nombre</label>
-    <input id="nombre" type="text" name="nombre" value="<%= peliculas.nombre %>">
+    <input id="nombre" type="text" name="nombre">
 
     <label for="duracion">Duración</label>
-    <input id="duracion" type="text" name="duracion" value="<%= peliculas.duracion %>" >
+    <input id="duracion" type="text" name="duracion">
 
     <label for="premios">Premios</label>
-    <input id="premios" type="text" name="premios" value="<%= peliculas.premios %>" >
+    <input id="premios" type="text" name="premios">
 
     <label for="imagen">Imagen</label>
-    <input id="imagen" type="text" name="imagen" value="<%= peliculas.imagen %>" >
+    <input id="imagen" type="text" name="imagen">
 
     <input type="submit" value="Insertar">
 </form>
@@ -90,4 +94,9 @@
 <%- include('partials/footer.html') %>
 
 </body>
+<script>
+    document.getElementById('director').addEventListener('change', function (){
+        document.getElementById('_id').value = this.value;
+    });
+</script>
 </html>

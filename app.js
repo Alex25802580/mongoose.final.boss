@@ -233,13 +233,14 @@ app.get('/contacto', (req, res) => {
 app.get('/about', (req, res) => {
     res.render('about',{title:'About'})
 });
-app.get('/peliculas/insert', (req,res)=>{
-    res.render('insert_peliculas', {
-        title: 'Insertar Película',
-        peliculas: { nombre: '', duracion: '', premios: '', imagen: '' }
+app.get('/peliculas/insert', async (req,res)=>{
+    const directores = await director.find({});
+    res.render('insert_peliculas',
+                {title: 'Insertar Película',
+                    directores: directores
+                }
+                )
     });
-});
-
 app.get('/directores/insert', (req,res)=>{
     res.render('insert_directores', {
         title: 'Insertar Director',
@@ -322,14 +323,25 @@ app.post("/peliculas/update", async (req, res)=>{
 
 //Insertar pelicula
 app.post('/peliculas/insert', async (req, res) => {
-    const { nombre, duracion, premios, imagen } = req.body;
+    const data = req.body
+    const {nombre, duracion,premios,imagen,director} = req.body;
+    console.log('Data',data)
     try {
-        const result = await pelicula.create({ nombre, duracion, premios, imagen });
-        console.log('Película insertada:', result);
-        res.redirect('/peliculas');
-    } catch (error) {
-        console.error('Error al insertar la película:', error);
-        res.status(500).send('Error al insertar la película');
+        const nuevaPelicula = new pelicula({
+            nombre,
+            duracion,
+            premios,
+            imagen,
+            director
+
+        });
+        console.log(nuevaPelicula);
+        await nuevaPelicula.save();
+        console.log('Se ha insertado el Jugador!!!', nuevaPelicula)
+        res.redirect('/peliculas')
+    }catch (error) {
+        console.log(error)
+        res.status(500).send('Error interno del servidor')
     }
 });
 
