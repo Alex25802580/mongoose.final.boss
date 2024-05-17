@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title><%= title %></title>
-    <%- include('partials/navbar.html') %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
+
         body {
             background-color: #343a40; /* Color de fondo oscuro */
             color: white; /* Color del texto */
@@ -48,6 +47,8 @@
             text-decoration: underline; /* Subrayar al pasar el mouse */
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 
@@ -75,8 +76,8 @@
             <td><%= pelicula.nombre %></td>
             <td><%= pelicula.duracion %></td>
             <td><%= pelicula.premios %></td>
-            <td><img src="<%= pelicula.imagen %>" alt="" height="150px"></td>
-            <td><%=  pelicula.director.nombre %></td>
+            <td><img src="<%= pelicula.imagen %>" alt="imagen" height="150px"></td>
+            <td><%= pelicula.director.nombre %></td>
             <td>
                 <div>
                     <a href="#" data-pelicula-id="<%= pelicula.id %>" class="btn btn-danger action_delete_pelicula">Eliminar Película</a>
@@ -92,20 +93,19 @@
     </tbody>
 </table>
 
-<%- include('partials/footer.html') %>
-
 <script>
     async function delete_pelicula(evt){
-        evt.preventDefault(); // Detener el comportamiento por defecto
+        evt.preventDefault();
+        console.log('Función delete_pelicula llamada');
         let id = $(this).data('pelicula-id');
         try {
             await $.ajax({
-                url: '/api/peliculas/'  + id,
+                url: '/api/peliculas/' + id,
                 type: 'DELETE'
             });
             window.location.reload();
         } catch (e) {
-            console.log('Error' + e.status + " " + e.statusText);
+            console.log('Error ' + e.status + " " + e.statusText);
         }
     }
 
@@ -115,5 +115,4 @@
 </script>
 
 </body>
-<%- include('partials/footer.html') %>
 </html>

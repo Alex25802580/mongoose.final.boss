@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/equipos.css'/>
-    <%- include('partials/navbar.html') %>
     <style>
 
         body {
@@ -84,17 +82,13 @@
                 <a href="/directores/update/<%= director.id %>" class="btn btn-secondary">Actualizar</a>
             </td>
         </tr>
-
     <% } else { %>
         <tr>
             <td colspan="6">Director eliminado correctamente</td>
         </tr>
     <% } %>
-
     </tbody>
 </table>
-
-<%- include('partials/footer.html') %>
 
 <script>
     async function delete_director(evt){
@@ -117,5 +111,4 @@
 </script>
 
 </body>
-<%- include('partials/footer.html') %>
 </html>

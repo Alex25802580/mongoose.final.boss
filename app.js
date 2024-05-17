@@ -157,20 +157,15 @@ app.get('/api/peliculas',async (req, res) => {
 
 // ITEMS DETAIL
 app.get('/api/peliculas/:id', async (req, res) => {
-    const id = req.params.id;
-    try {
-        const result = await pelicula.findById(id).populate('director');
-        if (result) {
-            res.status(200).send(result);
-        } else {
-            res.status(404).send("Película no encontrada");
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Error en el servidor");
+    const id = req.params.id
+    const result = await pelicula.findById(id);
+    if (pelicula){
+        res.send(pelicula);
+    }else {
+        res.status(500).send("Error");
     }
+    res.send(result);
 });
-
 
 
 // HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
@@ -190,21 +185,24 @@ app.post("/api/peliculas/update/:id", async (req, res)=>{
 });
 
 // ELIMINAR UN ITEM DE PELICULA POR ID
-app.delete('/api/peliculas/:id',async (req, res)=>{
-    const id = req.params.id
-    try{
-        const peliculaElim = await pelicula.deleteOne({_id:id});
-        console.log(peliculaElim)
-        if (peliculaElim) {
-            res.send('Pelicula eliminado correctamente');
+app.delete('/api/peliculas/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const deletedPelicula = await pelicula.deleteOne({ _id: id });
+        console.log(deletedPelicula);
+        if (deletedPelicula) {
+            res.send({}); // Envía una respuesta vacía
         } else {
             res.status(404).send('Pelicula no encontrada');
         }
-    }catch (e){
+    } catch (e) {
         console.log(e);
-        res.send('Error en el servidor')
+        res.send('Error en el servidor');
     }
 });
+
+
+
 
 // INSERTAR UN NUEVO ITEM A PELICULA
 app.post('/api/peliculas', async (req, res)=>{
@@ -259,21 +257,17 @@ app.get('/directores/detalles/:id',async (req, res) => {
     res.render('detalles_directores', params)
 });
 
-app.get('/peliculas/detalles/:id', async (req, res) => {
-    const id = req.params.id;
-    try {
-        const peliculaDetalles = await pelicula.findById(id).populate('director');
-        if (peliculaDetalles) {
-            console.log(peliculaDetalles); // Agrega este console.log para imprimir la información de la película
-            res.render('detalles_peliculas', { title: 'Detalles Película', pelicula: peliculaDetalles });
-        } else {
-            res.status(404).send("Película no encontrada");
-        }
-    } catch (error) {
-        console.log(error);
-        res.status(500).send("Error en el servidor");
+app.get('/peliculas/detalles/:id',async (req, res) => {
+    const id = req.params.id
+    const query = await pelicula.findById(id);
+    console.log(query)
+    const params = {
+        title: 'Detalles Pelicula',
+        pelicula: query
     }
+    res.render('detalles_peliculas', params)
 });
+
 
 
 

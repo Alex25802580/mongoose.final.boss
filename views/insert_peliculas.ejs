@@ -7,7 +7,7 @@
 
         body {
             background-color: #343a40; /* Color de fondo oscuro */
-            color: white; /* Color del texto */
+            color: #e11212; /* Color del texto */
             padding-top: 70px; /* Añadir espacio al principio */
         }
 
@@ -47,7 +47,7 @@
 
         input[type="text"] {
             background-color: white; /* Color de fondo blanco para los campos de texto */
-            color: darkorchid; /* Color del texto en los campos de texto */
+            color: white; /* Color del texto en los campos de texto */
             border: 1px solid #ced4da; /* Añadir un borde a los campos de texto */
             border-radius: 4px; /* Agregar bordes redondeados a los campos de texto */
             padding: 8px; /* Añadir espacio interno */
@@ -76,6 +76,7 @@
         <% }); %>
     </select>
 
+
     <label for="nombre">Nombre</label>
     <input id="nombre" type="text" name="nombre">
 
@@ -94,9 +95,12 @@
 <%- include('partials/footer.html') %>
 
 </body>
-<script>
-    document.getElementById('director').addEventListener('change', function (){
-        document.getElementById('_id').value = this.value;
+    <script>
+        document.getElementById('director_id').addEventListener('change', function (){
+        document.getElementById('director_nombre').value = this.value;
     });
 </script>
+
+</script>
+
 </html>
