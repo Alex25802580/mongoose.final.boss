@@ -49,6 +49,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const Director = require('./models/Director');
 
 const director = require('./models/Director'); // Importa el modelo Director
 const pelicula = require('./models/peliculas'); // Importa el modelo Pelicula
@@ -156,29 +157,37 @@ app.get('/api/peliculas',async (req, res) => {
 });
 
 // ITEMS DETAIL
+// ITEMS DETAIL
 app.get('/api/peliculas/:id', async (req, res) => {
-    const id = req.params.id
-    const result = await pelicula.findById(id);
-    if (pelicula){
-        res.send(pelicula);
-    }else {
-        res.status(500).send("Error");
+    const id = req.params.id;
+    try {
+        const result = await pelicula.findById(id);
+        if (result) {
+            res.send(result);
+        } else {
+            res.status(404).send("Pelicula no encontrada");
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error en el servidor");
     }
-    res.send(result);
 });
 
 
-// HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
-app.post("/api/peliculas/update/:id", async (req, res)=>{
-    let id = req.params.id;
-    let params = req.body;
-    console.log(params)
-    try{
-        const peliculaUpdate = await pelicula.findOneAndUpdate({_id: id},{$set: params},{new: true});
 
-        res.status(200).json({success: true, message: 'Updatedado Correctamente'});
-        console.log('Updateado id: ', id)
-    } catch (error){
+// HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
+app.post("/api/peliculas/update/:id", async (req, res) => {
+    let id = req.params.id;
+    let dataBody = req.body;
+    console.log(dataBody)
+    try {
+        await pelicula.findOneAndUpdate(
+            {_id: id},
+            {$set: dataBody},
+            {new: true}
+        );
+        res.send('Updateado correctamente')
+    } catch (error) {
         console.log(error)
         res.send('Error en el servidor.')
     }
@@ -205,15 +214,28 @@ app.delete('/api/peliculas/:id', async (req, res) => {
 
 
 // INSERTAR UN NUEVO ITEM A PELICULA
-app.post('/api/peliculas', async (req, res)=>{
+app.post('/api/peliculas/update/', async (req, res) => {
     const params = req.body;
     console.log(params);
-    try{
-        await pelicula.create(params);
-        res.send('Insertada correctamente')
-    }catch (e) {
-        console.log(e)
-        res.send('Error en el servidor')
+    try {
+        const nuevoPelicula = await pelicula.create(params);
+        console.log('Pelicula insertada', nuevaPelicula);
+        res.send('Insertada correctamente');
+    } catch (error) {
+        console.error(error);
+        res.send('Error en el servidor');
+    }
+});
+app.post('/api/peliculas', async (req, res) => {
+    const params = req.body;
+    console.log(params);
+    try {
+        const nuevaPelicula = await pelicula.create(params);
+        console.log('Insertada', nuevaPelicula);
+        res.send('Insertada correctamente');
+    } catch (error) {
+        console.error(error);
+        res.send('Error en el servidor');
     }
 });
 
@@ -284,30 +306,38 @@ app.get('/peliculas', async (req, res) => {
     res.render('peliculas', params);
 });
 //UPDATE ITEM
-app.get('/peliculas/update/:id', async (req,res)=>{
+app.get('/peliculas/update/:id', async (req, res) => {
     const id = req.params.id
-    const query = await pelicula.findById(id);
+    const query = await pelicula.find({_id: id});
+    const directores = await Director.find({});
     console.log(query)
     const params = {
         title: 'Update Pelicula',
-        item: query
+        peliculas: query[0],
+        directores: directores
     }
-    res.render('update_peliculas', params)
-});
-
+    res.render('update_peliculas', { directores: directores, pelicula: pelicula });});
 
 
 //Update quipo
-app.post("/peliculas/update", async (req, res)=>{
-    const {_id,nombre,duracion,premios,imagen} = req.body
-    console.log('params',{_id,nombre,duracion,premios,imagen})
+app.post("/peliculas/update", async (req, res) => {
     try {
-        const result = await pelicula.findByIdAndUpdate(_id,{nombre,duracion,premios,imagen},{new:true});
-        console.log('insertada!', result)
-        res.redirect('/peliculas')
-    }catch (e) {
-        console.log(e)
-        res.status(500).send('error en el servidor')
+        const {id,nombre, duracion, premios, imagen, director} = req.body;
+        const directorSelec = await Director.find({_id: director})
+        const nuevaPelicula = await pelicula.findOneAndUpdate({_id: id}, {
+                nombre,
+                duracion,
+                premios,
+                imagen,
+                director: directorSelec[0]
+            },
+            {new: false});
+        console.log('insertado!', nuevaPelicula)
+
+        res.redirect('/peliculas');
+    } catch (error) {
+        console.error(error);
+        res.send(500);
     }
 });
 
@@ -317,27 +347,25 @@ app.post("/peliculas/update", async (req, res)=>{
 
 //Insertar pelicula
 app.post('/peliculas/insert', async (req, res) => {
-    const data = req.body
-    const {nombre, duracion,premios,imagen,director} = req.body;
-    console.log('Data',data)
+    const {nombre, duracion, premios, imagen, director} = req.body;
+    // console.log(params)
     try {
-        const nuevaPelicula = new pelicula({
+        const directorSelec = await Director.find({_id: director})
+        const nuevaPelicula = await pelicula.create({
             nombre,
             duracion,
             premios,
             imagen,
-            director
-
+            director: directorSelec[0]
         });
-        console.log(nuevaPelicula);
-        await nuevaPelicula.save();
-        console.log('Se ha insertado el Jugador!!!', nuevaPelicula)
+        console.log('insertado!', nuevaPelicula)
         res.redirect('/peliculas')
-    }catch (error) {
-        console.log(error)
-        res.status(500).send('Error interno del servidor')
+    } catch (e) {
+        console.log(e)
+        res.status(500).send('error en el servidor')
     }
 });
+
 
 
 //////////////////////////// DIRECTORES ///////////////////////////////
@@ -355,7 +383,7 @@ app.get('/directores', async (req, res) => {
     console.log(params)
     res.render('directores', params);
 });
-// Update quipo
+// Update director
 app.post("/directores/update", async (req, res)=>{
     const {_id,nombre,nacionalidad,genero,imagen} = req.body;
     console.log('params',{_id,nombre,nacionalidad,genero,imagen})

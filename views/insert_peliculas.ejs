@@ -66,16 +66,14 @@
 <li class="nav-item">
     <a class="nav-link btn btn-primary" href="/peliculas">Volver</a>
 </li>
-
 <form action="/peliculas/insert" method="POST">
 
     <label for="director">Director</label>
-    <select name="director" id="director_id">
-        <% directores.forEach(function (director) { %>
+    <select class="option-bar" id="director" name="director">
+        <% directores.forEach((director) =>{ %>
             <option value="<%= director._id %>"><%= director.nombre %></option>
         <% }); %>
     </select>
-
 
     <label for="nombre">Nombre</label>
     <input id="nombre" type="text" name="nombre">
@@ -92,15 +90,7 @@
     <input type="submit" value="Insertar">
 </form>
 
-<%- include('partials/footer.html') %>
-
 </body>
-    <script>
-        document.getElementById('director_id').addEventListener('change', function (){
-        document.getElementById('director_nombre').value = this.value;
-    });
-</script>
-
 </script>
 
 </html>

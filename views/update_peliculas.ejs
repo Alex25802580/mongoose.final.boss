@@ -69,25 +69,37 @@
 </li>
 
 
-<form action="/peliculas/update" method="POST">
-
-    <input id="_id" type="hidden" name="_id" value="<%= item._id %>">
+<form action="/peliculas/update" method="POST" id="updateForm">
+    <label for="iddirector">Director</label>
+    <select class="option-bar" id="director" name="director">
+        <% directores.forEach((director) =>{ %>
+            <option value="<%= director.id %>" <% if (director.id === pelicula.director) { %> selected <% } %>><%= director.nombre %></option>
+        <% }); %>
+    </select>
+    <input id="_id" type="hidden" name="_id" value="<%= pelicula._id %>">
     <label for="nombre">Nombre</label>
-    <input id="nombre" type="text" name="nombre" value="<%= item.nombre %>">
+    <input id="nombre" type="text" name="nombre" value="<%= pelicula.nombre %>">
 
     <label for="duracion">Duración</label>
-    <input id="duracion" type="text" name="duracion" value="<%= item.duracion %>" >
+    <input id="duracion" type="text" name="duracion" value="<%= pelicula.duracion %>" >
 
     <label for="premios">Premios</label>
-    <input id="premios" type="text" name="premios" value="<%= item.premios %>" >
+    <input id="premios" type="text" name="premios" value="<%= pelicula.premios %>" >
 
     <label for="imagen">Imagen</label>
-    <input id="imagen" type="text" name="imagen" value="<%= item.imagen %>" >
+    <input id="imagen" type="text" name="imagen" value="<%= pelicula.imagen %>" >
 
     <input type="submit" value="Actualizar">
 </form>
 
-<%- include('partials/footer.html') %>
+<script>
+    function confirmUpdate() {
+        let confirmacion = confirm("¿Estás seguro de que quieres actualizar este piloto?");
 
+        if (confirmacion) {
+            document.getElementById("updateForm").submit();
+        }
+    }
+</script>
 </body>
 </html>
