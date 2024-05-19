@@ -53,7 +53,21 @@ const Director = require('./models/Director');
 
 const director = require('./models/Director'); // Importa el modelo Director
 const pelicula = require('./models/peliculas'); // Importa el modelo Pelicula
-
+/**
+ * @swagger
+ * /api/directores:
+ *   get:
+ *     summary: Obtener todos los directores
+ *     responses:
+ *       200:
+ *         description: Lista de directores
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Director'
+ */
 
 
 // MUESTRA TODOS LOS directores
@@ -62,8 +76,27 @@ app.get('/api/directores', async (req, res) => {
     res.send(directores)
 
 });
-
-// ITEMS DETAIL
+/**
+ * @swagger
+ * /api/directores/{id}:
+ *   get:
+ *     summary: Obtener un director por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Director encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Director'
+ *       404:
+ *         description: Director no encontrado
+ */
 app.get('/api/directores/:id', async (req, res) => {
     const id = req.params.id
     const result = await director.findById(id);
@@ -75,7 +108,30 @@ app.get('/api/directores/:id', async (req, res) => {
     res.send(result);
 });
 
-// HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
+/**
+ * @swagger
+ * /api/directores/update/{id}:
+ *   post:
+ *     summary: Actualizar un director por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Datos del director a actualizar
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Director'
+ *     responses:
+ *       200:
+ *         description: Director actualizado correctamente
+ *       404:
+ *         description: Director no encontrado
+ */
 app.post("/api/directores/update/:id", async (req, res)=>{
     let id = req.params.id;
     let params = req.body;
@@ -92,6 +148,31 @@ app.post("/api/directores/update/:id", async (req, res)=>{
         res.send('Error en el servidor.')
     }
 });
+
+/**
+ * @swagger
+ * /api/peliculas/update/{id}:
+ *   post:
+ *     summary: Actualizar una película por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       description: Datos de la película a actualizar
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Pelicula'
+ *     responses:
+ *       200:
+ *         description: Película actualizada correctamente
+ *       404:
+ *         description: Película no encontrada
+ */
 app.post("/api/peliculas/update/:id", async (req, res)=>{
     let id = req.params.id;
     let params = req.body;
@@ -110,9 +191,25 @@ app.post("/api/peliculas/update/:id", async (req, res)=>{
     }
 });
 
+/**
+ * @swagger
+ * /api/directores/{id}:
+ *   delete:
+ *     summary: Eliminar un director por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Director eliminado correctamente
+ *       404:
+ *         description: Director no encontrado
+ */
 
 
-// ELIMINAR UN ITEM DE DIRECTORES POR ID
 app.delete('/api/directores/:id', async (req, res)=>{
     const id = req.params.id
     try{
@@ -129,7 +226,22 @@ app.delete('/api/directores/:id', async (req, res)=>{
     }
 });
 
-// INSERTAR UN NUEVO ITEM A Directores
+/**
+ * @swagger
+ * /api/directores:
+ *   post:
+ *     summary: Insertar un nuevo director
+ *     requestBody:
+ *       description: Datos del nuevo director
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Director'
+ *     responses:
+ *       200:
+ *         description: Director insertado correctamente
+ */
 app.post('/api/directores', async (req, res)=>{
     const params = req.body;
     console.log(params);
@@ -143,10 +255,22 @@ app.post('/api/directores', async (req, res)=>{
 
 });
 
-//////////////////////////// PEliculas ///////////////////////////////
 
-
-// MUESTRA TODAS LAS PELICULAS
+/**
+ * @swagger
+ * /api/peliculas:
+ *   get:
+ *     summary: Obtener todas las películas
+ *     responses:
+ *       200:
+ *         description: Lista de películas
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Pelicula'
+ */
 app.get('/api/peliculas',async (req, res) => {
     try{
         const peliculas = await pelicula.find({});
@@ -156,8 +280,27 @@ app.get('/api/peliculas',async (req, res) => {
     }
 });
 
-// ITEMS DETAIL
-// ITEMS DETAIL
+/**
+ * @swagger
+ * /api/peliculas/{id}:
+ *   get:
+ *     summary: Obtener una película por ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Película encontrada
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Pelicula'
+ *       404:
+ *         description: Película no encontrada
+ */
 app.get('/api/peliculas/:id', async (req, res) => {
     const id = req.params.id;
     try {
@@ -175,7 +318,41 @@ app.get('/api/peliculas/:id', async (req, res) => {
 
 
 
-// HACER UPDATE A UN ITEM EN CONCRETO A TRAVES DE ID
+/**
+ * @swagger
+ * /api/peliculas/update/{id}:
+ *   post:
+ *     summary: Actualiza una película por su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID de la película a actualizar.
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: body
+ *         required: true
+ *         description: Datos actualizados de la película.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             nombre:
+ *               type: string
+ *             duracion:
+ *               type: string
+ *             premios:
+ *               type: number
+ *             imagen:
+ *               type: string
+ *             director:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: Película actualizada correctamente.
+ *       404:
+ *         description: Película no encontrada.
+ */
 app.post("/api/peliculas/update/:id", async (req, res) => {
     let id = req.params.id;
     let dataBody = req.body;
@@ -193,7 +370,24 @@ app.post("/api/peliculas/update/:id", async (req, res) => {
     }
 });
 
-// ELIMINAR UN ITEM DE PELICULA POR ID
+/**
+ * @swagger
+ * /api/peliculas/{id}:
+ *   delete:
+ *     summary: Elimina una película por su ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID de la película a eliminar.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Película eliminada correctamente.
+ *       404:
+ *         description: Película no encontrada.
+ */
 app.delete('/api/peliculas/:id', async (req, res) => {
     const id = req.params.id;
     try {
@@ -210,22 +404,33 @@ app.delete('/api/peliculas/:id', async (req, res) => {
     }
 });
 
-
-
-
-// INSERTAR UN NUEVO ITEM A PELICULA
-app.post('/api/peliculas/update/', async (req, res) => {
-    const params = req.body;
-    console.log(params);
-    try {
-        const nuevoPelicula = await pelicula.create(params);
-        console.log('Pelicula insertada', nuevaPelicula);
-        res.send('Insertada correctamente');
-    } catch (error) {
-        console.error(error);
-        res.send('Error en el servidor');
-    }
-});
+/**
+ * @swagger
+ * /api/peliculas:
+ *   post:
+ *     summary: Inserta una nueva película.
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         required: true
+ *         description: Datos de la nueva película.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             nombre:
+ *               type: string
+ *             duracion:
+ *               type: string
+ *             premios:
+ *               type: number
+ *             imagen:
+ *               type: string
+ *             director:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: Película insertada correctamente.
+ */
 app.post('/api/peliculas', async (req, res) => {
     const params = req.body;
     console.log(params);
@@ -239,8 +444,8 @@ app.post('/api/peliculas', async (req, res) => {
     }
 });
 
-////////////////////////////////////////// WEB //////////////////////////////////////
-//////////////////////////// PELICULA ///////////////////////////////
+
+//WEB///
 
 // INDEX
 app.get('/', (req, res) => {

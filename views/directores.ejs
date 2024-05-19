@@ -8,34 +8,34 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #343a40; /* Cambiar el color de fondo */
-            color: white; /* Cambiar el color del texto */
-            padding-top: 70px; /* Añadir espacio al principio */
+            background-color: #343a40;
+            color: white;
+            padding-top: 70px;
         }
 
         table {
-            width: 100%; /* Hacer la tabla ocupar todo el ancho */
-            border-collapse: collapse; /* Colapsar los bordes de la tabla */
+            width: 100%;
+            border-collapse: collapse;
         }
 
         th, td {
-            padding: 8px; /* Añadir espacio interno */
-            text-align: left; /* Alinear el texto a la izquierda */
-            border-bottom: 1px solid #555; /* Añadir borde inferior */
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #555;
         }
 
         th {
-            background-color: #212529; /* Cambiar el color de fondo de las cabeceras */
+            background-color: #212529;
         }
 
         img {
-            border-radius: 10px; /* Agregar borde redondeado a las imágenes */
-            height: 150px; /* Definir la altura de las imágenes */
-            object-fit: cover; /* Ajustar la imagen para cubrir el contenedor */
+            border-radius: 10px;
+            height: 150px;
+            object-fit: cover;
         }
 
         .btn {
-            margin-right: 5px; /* Añadir espacio entre los botones */
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -60,8 +60,6 @@
     <thead>
     <tr>
         <th>Nombre</th>
-        <th>Nacionalidad</th>
-        <th>Género</th>
         <th>Imagen</th>
         <th>Acciones</th>
     </tr>
@@ -71,8 +69,6 @@
         <% directores.forEach(function(director) { %>
             <tr>
                 <td><%= director.nombre %></td>
-                <td><%= director.nacionalidad %></td>
-                <td><%= director.genero %></td>
                 <td><img src="<%= director.imagen %>" alt=""></td>
                 <td>
                     <a href="/directores/detalles/<%= director.id %>" class="btn btn-secondary">Detalles del director</a>
