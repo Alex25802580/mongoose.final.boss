@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
-    <%- include('partials/navbar.html') %>
     <style>
-
         body {
             background-color: #343a40; /* Color de fondo oscuro */
             color: white; /* Color del texto */
@@ -24,10 +22,12 @@
         label {
             display: block; /* Mostrar las etiquetas en bloques */
             margin-top: 10px; /* Espacio superior */
+            color: #ffffff; /* Color del texto de las etiquetas */
         }
 
         input[type="text"],
-        input[type="submit"] {
+        input[type="submit"],
+        select {
             width: 100%; /* Ancho completo */
             padding: 8px; /* Añadir espacio interno */
             margin-top: 5px; /* Espacio superior */
@@ -45,7 +45,8 @@
             background-color: #0056b3; /* Color de fondo del botón al pasar el mouse */
         }
 
-        input[type="text"] {
+        input[type="text"],
+        select {
             background-color: white; /* Color de fondo blanco para los campos de texto */
             color: #495057; /* Color del texto en los campos de texto */
             border: 1px solid #ced4da; /* Añadir un borde a los campos de texto */
@@ -60,34 +61,32 @@
 
 <body>
 
-
-<%- include('partials/navbar.html') %>
-
-<h1>Actualizar ítem></h1>
+<h1>Actualizar ítem</h1>
 <li class="nav-item">
     <a class="nav-link btn btn-primary" href="/peliculas">Volver</a>
 </li>
 
-
 <form action="/peliculas/update" method="POST" id="updateForm">
-    <label for="iddirector">Director</label>
+    <label for="director">Director</label>
     <select class="option-bar" id="director" name="director">
         <% directores.forEach((director) =>{ %>
             <option value="<%= director.id %>" <% if (director.id === pelicula.director) { %> selected <% } %>><%= director.nombre %></option>
         <% }); %>
     </select>
+
     <input id="_id" type="hidden" name="_id" value="<%= pelicula._id %>">
+
     <label for="nombre">Nombre</label>
     <input id="nombre" type="text" name="nombre" value="<%= pelicula.nombre %>">
 
     <label for="duracion">Duración</label>
-    <input id="duracion" type="text" name="duracion" value="<%= pelicula.duracion %>" >
+    <input id="duracion" type="text" name="duracion" value="<%= pelicula.duracion %>">
 
     <label for="premios">Premios</label>
-    <input id="premios" type="text" name="premios" value="<%= pelicula.premios %>" >
+    <input id="premios" type="text" name="premios" value="<%= pelicula.premios %>">
 
     <label for="imagen">Imagen</label>
-    <input id="imagen" type="text" name="imagen" value="<%= pelicula.imagen %>" >
+    <input id="imagen" type="text" name="imagen" value="<%= pelicula.imagen %>" pattern="https://.*" title="La URL debe comenzar con https://">
 
     <input type="submit" value="Actualizar">
 </form>
@@ -95,7 +94,6 @@
 <script>
     function confirmUpdate() {
         let confirmacion = confirm("¿Estás seguro de que quieres actualizar este piloto?");
-
         if (confirmacion) {
             document.getElementById("updateForm").submit();
         }

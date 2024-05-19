@@ -2,17 +2,16 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
-    <%- include('partials/navbar.html') %>
     <style>
-
         body {
             background-color: #343a40; /* Color de fondo oscuro */
-            color: #e11212; /* Color del texto */
+            color: #ffffff; /* Color del texto */
             padding-top: 70px; /* Añadir espacio al principio */
         }
 
         h1 {
             text-align: center; /* Centrar el título */
+            color: #ffffff; /* Color del título */
             margin-top: 20px; /* Espacio superior */
         }
 
@@ -24,14 +23,20 @@
         label {
             display: block; /* Mostrar las etiquetas en bloques */
             margin-top: 10px; /* Espacio superior */
+            color: #ffffff; /* Color de las etiquetas */
         }
 
         input[type="text"],
-        input[type="submit"] {
+        input[type="submit"],
+        select {
             width: 100%; /* Ancho completo */
             padding: 8px; /* Añadir espacio interno */
             margin-top: 5px; /* Espacio superior */
             box-sizing: border-box; /* Incluir el padding en el ancho total */
+            color: #495057; /* Color del texto en los campos de texto */
+            background-color: #ffffff; /* Color de fondo blanco para los campos de texto */
+            border: 1px solid #ced4da; /* Añadir un borde a los campos de texto */
+            border-radius: 4px; /* Agregar bordes redondeados a los campos de texto */
         }
 
         input[type="submit"] {
@@ -44,23 +49,10 @@
         input[type="submit"]:hover {
             background-color: #0056b3; /* Color de fondo del botón al pasar el mouse */
         }
-
-        input[type="text"] {
-            background-color: white; /* Color de fondo blanco para los campos de texto */
-            color: white; /* Color del texto en los campos de texto */
-            border: 1px solid #ced4da; /* Añadir un borde a los campos de texto */
-            border-radius: 4px; /* Agregar bordes redondeados a los campos de texto */
-            padding: 8px; /* Añadir espacio interno */
-            margin-top: 5px; /* Espacio superior */
-            width: 100%; /* Ancho completo */
-            box-sizing: border-box; /* Incluir el padding en el ancho total */
-        }
     </style>
 </head>
 
 <body>
-
-<%- include('partials/navbar.html') %>
 
 <h1>Insertar Película</h1>
 <li class="nav-item">
@@ -85,12 +77,10 @@
     <input id="premios" type="text" name="premios">
 
     <label for="imagen">Imagen</label>
-    <input id="imagen" type="text" name="imagen">
+    <input id="imagen" type="text" name="imagen" pattern="https://.*" title="La URL debe comenzar con https://">
 
     <input type="submit" value="Insertar">
 </form>
 
 </body>
-</script>
-
 </html>

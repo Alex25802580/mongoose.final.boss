@@ -59,7 +59,6 @@
 </head>
 <body>
 
-<%- include('partials/navbar.html') %>
 
 <h1>Insertar Director</h1>
 <li class="nav-item">
@@ -77,12 +76,11 @@
     <input id="genero" type="text" name="genero">
 
     <label for="imagen">Imagen</label>
-    <input id="imagen" type="text" name="imagen">
+    <input id="imagen" type="text" name="imagen" pattern="https://.*" title="La URL debe comenzar con https://">
 
     <input type="submit" value="Insertar">
 </form>
 
-<%- include('partials/footer.html') %>
 
 </body>
 </html>

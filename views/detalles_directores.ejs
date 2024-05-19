@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title><%= title %></title>
     <style>
-
         body {
             background-color: #343a40; /* Color de fondo oscuro */
             color: white; /* Color del texto */
@@ -37,8 +36,44 @@
             text-align: center; /* Centrar el texto de las celdas */
         }
 
+        .btn {
+            color: white; /* Color del texto de los botones */
+            text-decoration: none; /* Quitar subrayado */
+            cursor: pointer; /* Cambiar cursor al pasar por encima */
+            display: inline-block; /* Mostrar como bloque en línea */
+            padding: 10px 20px; /* Añadir espacio interno */
+            border-radius: 4px; /* Bordes redondeados */
+            margin: 5px; /* Añadir espacio exterior */
+        }
+
+        .btn-primary {
+            background-color: white; /* Color de fondo del botón primario */
+            color: #007bff; /* Color del texto del botón primario */
+        }
+
+        .btn-primary:hover {
+            background-color: #e2e6ea; /* Color de fondo del botón primario al pasar el mouse */
+        }
+
+        .btn-danger {
+            background-color: #dc3545; /* Color de fondo del botón de peligro */
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Color de fondo del botón de peligro al pasar el mouse */
+        }
+
+        .btn-secondary {
+            background-color: white; /* Color de fondo del botón secundario */
+            color: #6c757d; /* Color del texto del botón secundario */
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e6ea; /* Color de fondo del botón secundario al pasar el mouse */
+        }
+
         .action_delete_director, .action_delete_director:hover {
-            color: #dc3545; /* Color del enlace y al pasar el mouse */
+            color: white; /* Color del enlace y al pasar el mouse */
             text-decoration: none; /* Quitar subrayado */
             cursor: pointer; /* Cambiar cursor al pasar por encima */
         }
@@ -50,8 +85,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
-<%- include('partials/navbar.html') %>
 
 <h1><%= title %></h1>
 <li class="nav-item">
@@ -71,20 +104,20 @@
     <tbody>
     <% if (director) { %>
         <tr>
-            <td> <%= director.nombre %></td>
-            <td> <%= director.nacionalidad %></td>
-            <td> <%= director.genero %></td>
-            <td><img src="<%= director.imagen %>" alt ="" height="150px"></td>
+            <td><%= director.nombre %></td>
+            <td><%= director.nacionalidad %></td>
+            <td><%= director.genero %></td>
+            <td><img src="<%= director.imagen %>" alt="imagen" height="150px"></td>
             <td>
                 <div>
                     <a href="#" data-director-id="<%= director.id %>" class="btn btn-danger action_delete_director">Eliminar Director</a>
                 </div>
-                <a href="/directores/update/<%= director.id %>" class="btn btn-secondary">Actualizar</a>
+                <a href="/directores/update/<%= director.id %>" class="btn btn-secondary">Actualizar Director</a>
             </td>
         </tr>
     <% } else { %>
         <tr>
-            <td colspan="6">Director eliminado correctamente</td>
+            <td colspan="5">Director eliminado correctamente</td>
         </tr>
     <% } %>
     </tbody>
@@ -98,16 +131,17 @@
         try {
             await $.ajax({
                 url: '/api/directores/' + id,
-                type: 'DELETE',
+                type: 'DELETE'
             });
             window.location.reload();
         } catch (e) {
-            console.log('Error' + e.status + " " + e.statusText);
+            console.log('Error ' + e.status + " " + e.statusText);
         }
     }
+
     $(document).ready(() =>{
         $('.action_delete_director').click(delete_director);
-         });
+    });
 </script>
 
 </body>
